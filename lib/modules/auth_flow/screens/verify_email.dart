@@ -1,13 +1,13 @@
 import 'package:buskeit/constant/helper/helper.dart';
-import 'package:buskeit/modules/Auth/Individual/verify-identity/verify_identity.dart';
+import 'package:buskeit/modules/auth_flow/screens/user_details.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../../../../../constant/constant.dart';
 import '../../../../../shared/shared.dart';
 
-class Verify extends StatelessWidget {
-  const Verify({Key? key}) : super(key: key);
+class VerifyEmail extends StatelessWidget {
+  const VerifyEmail({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class Verify extends StatelessWidget {
               style: Theme.of(context).textTheme.headline3),
           const YMargin(20),
           Text(
-            'Please type the verification code sent to +234 812 345 6789',
+            'Please type the verification code sent to You@gmail.com',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headline5!.copyWith(
                   color: AppColor.greyColor,
@@ -69,23 +69,25 @@ class Verify extends StatelessWidget {
           ),
           const YMargin(50),
           SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const VerifyIdentity(),
-                      ),
-                    );
-                  },
-                  child: Text(
-                    'Verify',
-                    style: Theme.of(context).textTheme.headline5!.copyWith(
-                          color: Colors.white,
-                        ),
-                  ))),
+            width: double.infinity,
+            height: 50,
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const UserDetails(),
+                  ),
+                );
+              },
+              child: Text(
+                'Verify',
+                style: Theme.of(context).textTheme.headline5!.copyWith(
+                      color: Colors.white,
+                    ),
+              ),
+            ),
+          ),
           const YMargin(20),
         ],
       ).paddingHorizontal(
