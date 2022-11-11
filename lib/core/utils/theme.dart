@@ -25,7 +25,17 @@ class AppTheme {
         border: InputBorder.none,
       ),
       appBarTheme: const AppBarTheme(
-        color: Color(0xFFC5C5C5),
+        color: Colors.transparent,
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
+        centerTitle: true,
+        titleTextStyle: TextStyle(
+          fontSize: 22.0,
+          fontFamily: 'Aeonik',
+          color: Colors.black,
+          fontWeight: FontWeight.w500,
+        ),
         elevation: 0,
       ),
       dividerTheme: const DividerThemeData(
