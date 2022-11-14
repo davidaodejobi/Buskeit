@@ -1,12 +1,11 @@
+import 'package:buskeit/constant/helper/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:buskeit/constant/helper/helper.dart';
-
 import '../../../../constant/constant.dart';
 import '../../../../shared/shared.dart';
+import '../view_model/signup_provider.dart';
 import 'verify_email.dart';
-import '../view_models/signup_provider.dart';
 
 class SignUp extends StatelessWidget {
   final String name;

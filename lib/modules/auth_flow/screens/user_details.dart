@@ -1,5 +1,5 @@
 import 'package:buskeit/constant/helper/helper.dart';
-import 'package:buskeit/modules/auth_flow/view_models/user_details_provider.dart';
+import 'package:buskeit/modules/auth_flow/view_model/signup_provider.dart';
 import 'package:buskeit/modules/dashboard_flow/screens/flow_selection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +12,7 @@ class UserDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final udProvider = Provider.of<UserDetailsProvider>(context);
+    final provider = Provider.of<SignupProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('User Details'),
@@ -34,13 +34,13 @@ class UserDetails extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextFieldWithHeader(
-                    controller: udProvider.firstNameController,
+                    controller: provider.firstNameController,
                     title: 'First Name',
                     hintText: 'John',
                   ),
                   const YMargin(16),
                   TextFieldWithHeader(
-                    controller: udProvider.lastNameController,
+                    controller: provider.lastNameController,
                     title: 'Lastname',
                     hintText: 'Doe',
                   ),
@@ -69,20 +69,22 @@ class UserDetails extends StatelessWidget {
                     ),
                     child: DropdownButtonHideUnderline(
                         child: DropdownButton<String>(
-                      items: ['Male', 'Female']
+                      items: provider.gender
                           .map((e) => DropdownMenuItem(
                                 value: e,
                                 child: Text(e),
                               ))
                           .toList(),
-                      onChanged: (value) {},
+                      onChanged: (value) {
+                        print('value: $value');
+                      },
                     )),
                   ),
                 ],
               ),
               const YMargin(16),
               TextFieldWithHeader(
-                controller: udProvider.phoneNoController,
+                controller: provider.phoneNoController,
                 title: 'Phone Number',
                 hintText: '+23412345678',
               ),

@@ -1,12 +1,11 @@
-import 'package:buskeit/modules/auth_flow/view_models/user_details_provider.dart';
-import 'package:buskeit/modules/sign_in/view_model/welcome_provider.dart';
-import 'package:buskeit/modules/sign_in/sign_in.dart';
+import 'package:buskeit/modules/auth_flow/view_model/signin_provider.dart';
+import 'package:buskeit/modules/auth_flow/screens/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'locator.dart';
 import 'core/utils/theme.dart';
-import 'modules/auth_flow/view_models/signup_provider.dart';
+import 'modules/auth_flow/view_model/signup_provider.dart';
 
 void main() {
   setup();
@@ -22,8 +21,6 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<SignupProvider>(create: (_) => SignupProvider()),
         ChangeNotifierProvider<SigninProvider>(create: (_) => SigninProvider()),
-        ChangeNotifierProvider<UserDetailsProvider>(
-            create: (_) => UserDetailsProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
