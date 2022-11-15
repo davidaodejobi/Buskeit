@@ -1,6 +1,4 @@
-import 'package:buskeit/constant/keys.dart';
 import 'package:buskeit/core/core.dart';
-import 'package:dio/dio.dart';
 
 import '../../../locator.dart';
 
@@ -27,32 +25,29 @@ class AuthenticationApiService {
   //   } on DioError catch (e) {
   //     return resModelFromJson(e.response.data);
   //   }
+  // // }
+
+  // Future login({required String email, required String password}) async {
+  //   try {
+  //     ResponseModel responseModel = ResponseModel();
+  //     await connect().post("/auth/token", data: {
+  //       "email": email,
+  //       "password": password,
+  //     }).then((value) async {
+  //       storeToken(value);
+  //       // Response response = await connect().get("/user/me");
+  //       // if (response.statusCode == 200) {
+  //       //   storeUserDetails(response);
+  //       // }
+  //     });
+
+  //     // await futureAwait();
+  //     print('responseModel: ${responseModel.message}');
+  //     return responseModel;
+  //   } on DioError catch (e) {
+  //     return errorModelFromJson(e.response!.data);
+  //   }
   // }
-
-  Future login({required String email, required String password}) async {
-    print('password: $password');
-    print('email: $email');
-    try {
-      ResponseModel responseModel = ResponseModel();
-      await connect().post("/auth/token", data: {
-        "email": email,
-        "password": password,
-      }).then((value) async {
-        storeToken(value);
-        // Response response = await connect().get("/user/me");
-        // if (response.statusCode == 200) {
-        //   storeUserDetails(response);
-        // }
-        // responseModel = responseModelFromJson(value.data);
-      });
-
-      // await futureAwait();
-      print('responseModel: ${responseModel.message}');
-      return responseModel;
-    } on DioError catch (e) {
-      return errorModelFromJson(e.response!.data);
-    }
-  }
 
   // Future validatePassword({String email, int otp, String password}) async {
   //   try {
@@ -87,21 +82,21 @@ class AuthenticationApiService {
   //   await Initializer().initialCalls();
   // }
 
-  storeToken(response) {
-    ResponseModel res = responseModelFromJson(response.data);
-    String token = 'access ${res.tokens}';
+  // storeToken(response) {
+  //   ResponseModel res = responseModelFromJson(response.data);
+  //   String token = 'access ${res.tokens!.access}';
 
-    storageService.storeItem(key: token, value: token);
-  }
+  //   storageService.storeItem(key: token, value: token);
+  // }
 
-  storeUserDetails(response) {
-    ResponseModel res = responseModelFromJson(response.data);
-    UserModel user = UserModel.fromJson(res.user);
+  // storeUserDetails(response) {
+  //   ResponseModel res = responseModelFromJson(response.data);
+  //   UserModel user = UserModel.fromJson(res.user);
 
-    // userService.credentials = user;
-    storageService.storeItem(
-        key: individualDetails, value: userModelToJson(user));
-  }
+  //   // userService.credentials = user;
+  //   storageService.storeItem(
+  //       key: individualDetails, value: userModelToJson(user));
+  // }
 
   // void logout() {
   //   storageService.isLoggedIn = false;

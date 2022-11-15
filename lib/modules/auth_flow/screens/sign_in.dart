@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:buskeit/constant/helper/helper.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constant/app_color.dart';
@@ -53,30 +54,28 @@ class SignIn extends StatelessWidget {
                     ),
                     const YMargin(16),
                     SizedBox(
-                        width: double.infinity,
-                        height: 50,
-                        child: ElevatedButton(
-                            onPressed: () {
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) => const FlowSelection(),
-                              //   ),
-                              // );
-                              provider.login(
-                                  emailVal: provider.emailController.text,
-                                  passwordVal:
-                                      provider.passwordController.text);
-                            },
-                            child: Text(
-                              'Log in',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline5!
-                                  .copyWith(
-                                    color: Colors.white,
-                                  ),
-                            ))),
+                      width: double.infinity,
+                      height: 50,
+                      child: ElevatedButton(
+                          onPressed: () {
+                            provider.login(
+                              email: provider.emailController.text,
+                              password: provider.passwordController.text,
+                              context: context,
+                            );
+                          },
+                          child: provider.isLoading
+                              ? Lottie.asset(
+                                  'assets/animations/loading.json',
+                                )
+                              : Text(
+                                  'Log in',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline5!
+                                      .copyWith(color: Colors.white),
+                                )),
+                    ),
                   ],
                 ),
               ),
@@ -114,38 +113,6 @@ class SignIn extends StatelessWidget {
             ],
           ),
         ).paddingSymmetric(horizontal: 16),
-      ),
-    );
-  }
-}
-
-class BorderButton extends StatelessWidget {
-  final String text;
-  final VoidCallback onPressed;
-  const BorderButton({
-    Key? key,
-    required this.text,
-    required this.onPressed,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onPressed,
-      borderRadius: BorderRadius.circular(5),
-      child: Container(
-        height: 50,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: AppColor.tertiaryColor,
-            width: 2,
-          ),
-          borderRadius: BorderRadius.circular(5),
-        ),
-        child: Center(
-          child: Text(text, style: Theme.of(context).textTheme.headline5!),
-        ),
       ),
     );
   }
