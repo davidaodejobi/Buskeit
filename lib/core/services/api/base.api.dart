@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:buskeit/core/core.dart';
 import 'package:dio/dio.dart';
 
+import '../../../constant/constant.dart';
 import '../../../locator.dart';
 
 connect() {
@@ -16,9 +17,11 @@ connect() {
   Dio dio = Dio(options);
 
   dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) async {
-    // String value = await storageService.readItem(key: token);
-
-    // options.headers['Authorization'] = value ?? '';
+    String? value = await storageService.readItem(key: token);
+    log('value: $value');
+    if (value != null) {
+      options.headers['Authorization'] = "Bearer $value";
+    }
     return handler.next(options);
   }, onResponse: (response, handler) {
     print(response.statusCode);

@@ -3,11 +3,11 @@ import 'dart:developer';
 import 'package:buskeit/modules/dashboard_flow/screens/flow_selection.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 
 import '../../../constant/constant.dart';
 import '../../../core/core.dart';
 import '../../../locator.dart';
+import '../../../shared/shared.dart';
 
 class SigninProvider with ChangeNotifier {
   StorageService storageService = getIt<StorageService>();
@@ -37,13 +37,17 @@ class SigninProvider with ChangeNotifier {
         "email": email,
         "password": password,
       }).then((value) async {
-        storeToken(value);
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const FlowSelection(),
-          ),
-        );
+        if (value.statusCode == 200) {
+          // responseModel = ResponseModel.fromJson(value.data);
+
+          storeToken(value);
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const FlowSelection(),
+            ),
+          );
+        }
         // Response response = await connect().get("/user/me");
         // if (response.statusCode == 200) {
         //   storeUserDetails(response);
@@ -54,6 +58,10 @@ class SigninProvider with ChangeNotifier {
       // await futureAwait();
       // print('responseModel: ${responseModel.message}');
       return responseModel;
+    } on HttpException catch (e) {
+      stopLoading();
+      print('HttpException: ${e.message}');
+      return e.message;
     } on DioError catch (e) {
       stopLoading();
       var errorMessage =
@@ -61,35 +69,11 @@ class SigninProvider with ChangeNotifier {
       showAlertDialog(context: context, message: errorMessage);
       log('e: ${e.message}');
       return errorModelFromJson(e.response!.data);
+    } catch (e) {
+      stopLoading();
+      print('Exception: ${e.toString()}');
+      return e.toString();
     }
-  }
-
-  showAlertDialog({required BuildContext context, required String message}) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Lottie.asset(
-          'assets/animations/error-purple.json',
-          height: 100,
-          width: 100,
-        ),
-        content: Text(
-          message,
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.headline5,
-        ),
-        actions: [
-          TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text(
-                'Ok',
-                style: Theme.of(context).textTheme.headline5,
-              )),
-        ],
-      ),
-    );
   }
 
   storeToken(response) {

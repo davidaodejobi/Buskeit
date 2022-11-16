@@ -1,16 +1,25 @@
-import 'package:buskeit/constant/helper/helper.dart';
-import 'package:buskeit/modules/auth_flow/screens/user_details.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+
+import 'package:buskeit/constant/helper/helper.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../constant/constant.dart';
 import '../../../../../shared/shared.dart';
+import '../view_model/signup_provider.dart';
 
 class VerifyEmail extends StatelessWidget {
-  const VerifyEmail({Key? key}) : super(key: key);
+  final String email;
+  const VerifyEmail({
+    Key? key,
+    required this.email,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<SignupProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Verify'),
@@ -23,7 +32,7 @@ class VerifyEmail extends StatelessWidget {
               style: Theme.of(context).textTheme.headline3),
           const YMargin(20),
           Text(
-            'Please type the verification code sent to You@gmail.com',
+            'Please type the verification code sent to $email',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headline5!.copyWith(
                   color: AppColor.greyColor,
@@ -56,8 +65,10 @@ class VerifyEmail extends StatelessWidget {
               hapticFeedbackTypes: HapticFeedbackTypes.vibrate,
               useHapticFeedback: true,
               enablePinAutofill: true,
-              controller: TextEditingController(),
-              onCompleted: (v) {},
+              controller: provider.verifyController,
+              onCompleted: (v) {
+                provider.verify(context: context);
+              },
               onChanged: (value) {},
               beforeTextPaste: (text) {
                 //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
@@ -73,19 +84,18 @@ class VerifyEmail extends StatelessWidget {
             height: 50,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const UserDetails(),
-                  ),
-                );
+                provider.verify(context: context);
               },
-              child: Text(
-                'Verify',
-                style: Theme.of(context).textTheme.headline5!.copyWith(
-                      color: Colors.white,
+              child: provider.isLoading
+                  ? Lottie.asset(
+                      'assets/animations/loading.json',
+                    )
+                  : Text(
+                      'Verify',
+                      style: Theme.of(context).textTheme.headline5!.copyWith(
+                            color: Colors.white,
+                          ),
                     ),
-              ),
             ),
           ),
           const YMargin(20),

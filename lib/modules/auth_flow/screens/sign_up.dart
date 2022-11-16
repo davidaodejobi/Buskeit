@@ -1,11 +1,11 @@
 import 'package:buskeit/constant/helper/helper.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../constant/constant.dart';
 import '../../../../shared/shared.dart';
 import '../view_model/signup_provider.dart';
-import 'verify_email.dart';
 
 class SignUp extends StatelessWidget {
   final String name;
@@ -16,13 +16,13 @@ class SignUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final spCont = Provider.of<SignupProvider>(context);
+    final provider = Provider.of<SignupProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(name),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: ListView(
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const YMargin(0),
           Column(
@@ -40,19 +40,19 @@ class SignUp extends StatelessWidget {
               ),
               const YMargin(30),
               TextFieldWithHeader(
-                controller: spCont.emailController,
+                controller: provider.emailController,
                 title: 'Email',
                 hintText: 'You@gmail.com',
               ),
               const YMargin(16),
               TextFieldWithHeader(
-                controller: spCont.emailController,
+                controller: provider.passwordController,
                 title: 'Password',
                 hintText: '********',
               ),
               const YMargin(16),
               TextFieldWithHeader(
-                controller: spCont.emailController,
+                controller: provider.passwordCController,
                 title: 'Confirm Password',
                 hintText: '********',
               ),
@@ -62,44 +62,48 @@ class SignUp extends StatelessWidget {
                   height: 50,
                   child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const VerifyEmail(),
-                          ),
-                        );
+                        if (provider.validatePassword(context)) {
+                          provider.signup(context: context);
+                        }
                       },
-                      child: Text(
-                        'Create my account',
-                        style: Theme.of(context).textTheme.headline5!.copyWith(
-                              color: Colors.white,
-                            ),
-                      ))),
+                      child: provider.isLoading
+                          ? Lottie.asset(
+                              'assets/animations/loading.json',
+                            )
+                          : Text(
+                              'Create my account',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline5!
+                                  .copyWith(
+                                    color: Colors.white,
+                                  ),
+                            ))),
               const YMargin(20),
             ],
           ),
-          Column(
-            children: [
-              Text(
-                'By signing up you are agreeing to our',
-                style: Theme.of(context).textTheme.headline6!.copyWith(
-                      color: AppColor.greyColor,
-                      fontWeight: FontWeight.w500,
-                    ),
-              ),
-              const YMargin(8),
-              InkWell(
-                onTap: () {},
-                child: Text(
-                  'Terms and conditions',
-                  style: Theme.of(context).textTheme.headline6!.copyWith(
-                        fontWeight: FontWeight.w500,
-                        color: AppColor.primaryColor,
-                      ),
-                ),
-              ),
-            ],
-          ),
+          // Column(
+          //   children: [
+          //     Text(
+          //       'By signing up you are agreeing to our',
+          //       style: Theme.of(context).textTheme.headline6!.copyWith(
+          //             color: AppColor.greyColor,
+          //             fontWeight: FontWeight.w500,
+          //           ),
+          //     ),
+          //     const YMargin(8),
+          //     InkWell(
+          //       onTap: () {},
+          //       child: Text(
+          //         'Terms and conditions',
+          //         style: Theme.of(context).textTheme.headline6!.copyWith(
+          //               fontWeight: FontWeight.w500,
+          //               color: AppColor.primaryColor,
+          //             ),
+          //       ),
+          //     ),
+          //   ],
+          // ),
         ],
       ).paddingSymmetric(
         horizontal: 16,
@@ -108,3 +112,5 @@ class SignUp extends StatelessWidget {
     );
   }
 }
+
+class z {}

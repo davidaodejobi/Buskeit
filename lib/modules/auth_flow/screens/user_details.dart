@@ -1,7 +1,7 @@
 import 'package:buskeit/constant/helper/helper.dart';
 import 'package:buskeit/modules/auth_flow/view_model/signup_provider.dart';
-import 'package:buskeit/modules/dashboard_flow/screens/flow_selection.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constant/constant.dart';
@@ -71,12 +71,12 @@ class UserDetails extends StatelessWidget {
                         child: DropdownButton<String>(
                       items: provider.gender
                           .map((e) => DropdownMenuItem(
-                                value: e,
+                                value: provider.selectedGender,
                                 child: Text(e),
                               ))
                           .toList(),
                       onChanged: (value) {
-                        print('value: $value');
+                        provider.dropDownSelect(value!);
                       },
                     )),
                   ),
@@ -84,7 +84,7 @@ class UserDetails extends StatelessWidget {
               ),
               const YMargin(16),
               TextFieldWithHeader(
-                controller: provider.phoneNoController,
+                controller: provider.phoneNumberController,
                 title: 'Phone Number',
                 hintText: '+23412345678',
               ),
@@ -94,19 +94,21 @@ class UserDetails extends StatelessWidget {
                   height: 50,
                   child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const FlowSelection(),
-                          ),
-                        );
+                        provider.completeRegistration(context: context);
                       },
-                      child: Text(
-                        'Create my account',
-                        style: Theme.of(context).textTheme.headline5!.copyWith(
-                              color: Colors.white,
-                            ),
-                      ))),
+                      child: provider.isLoading
+                          ? Lottie.asset(
+                              'assets/animations/loading.json',
+                            )
+                          : Text(
+                              'Create my account',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline5!
+                                  .copyWith(
+                                    color: Colors.white,
+                                  ),
+                            ))),
               const YMargin(20),
             ],
           ),
