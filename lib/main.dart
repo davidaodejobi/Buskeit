@@ -19,8 +19,6 @@ Future<void> main() async {
   StorageService storageService = getIt<StorageService>();
   String? theToken = await storageService.readItem(key: token);
   bool expired = theToken == null ? true : isTokenExpired(theToken);
-  print(
-      'expireddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd: $expired');
   runApp(MyApp(
     isExpired: expired,
   ));
@@ -46,7 +44,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Buskeit',
         theme: AppTheme.light(),
-        home: isExpired ? const SignIn() : const FlowSelection(),
+        home: isExpired ? const SignIn() : const DashBoard(),
       ),
     );
   }

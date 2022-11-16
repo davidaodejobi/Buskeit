@@ -112,5 +112,3 @@ class SignUp extends StatelessWidget {
     );
   }
 }
-
-class z {}

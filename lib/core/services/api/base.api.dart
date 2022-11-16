@@ -24,7 +24,7 @@ connect() {
     }
     return handler.next(options);
   }, onResponse: (response, handler) {
-    print(response.statusCode);
+    log('response: ${response.data}');
     log(response.data.toString());
     return handler.next(response);
   }, onError: (DioError e, handler) {

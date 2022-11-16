@@ -165,7 +165,7 @@ class SignupProvider with ChangeNotifier {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const FlowSelection(),
+            builder: (context) => const DashBoard(),
           ),
         );
       });

@@ -8,7 +8,8 @@ class AppTheme {
       iconTheme: const IconThemeData(
         color: Colors.black,
       ),
-      scaffoldBackgroundColor: AppColor.backgroundColor,
+      useMaterial3: true,
+      scaffoldBackgroundColor: Colors.white,
       textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(
           overlayColor: MaterialStateProperty.all(

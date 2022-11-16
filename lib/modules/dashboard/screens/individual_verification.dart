@@ -4,7 +4,6 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../../../constant/constant.dart';
 import '../../../shared/shared.dart';
-import '../../dashboard/screens/dashboard.dart';
 
 class IndividualVerification extends StatelessWidget {
   const IndividualVerification({super.key});
@@ -76,7 +75,7 @@ class IndividualVerification extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const DashBoard(),
+                    builder: (context) => Container(),
                   ),
                 );
               },
