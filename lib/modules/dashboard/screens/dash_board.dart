@@ -36,19 +36,7 @@ class DashBoard extends StatelessWidget {
         ],
         title: const Text('Buskeit'),
       ),
-      drawer: const Drawer(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(20),
-            bottomRight: Radius.circular(20),
-          ),
-        ),
-        child: Scaffold(
-          body: Center(
-            child: Text('Drawer'),
-          ),
-        ),
-      ),
+      drawer: const DashboardDrawer(),
       body: Column(
         children: [
           const DashboardHeaderCard(),
@@ -56,7 +44,7 @@ class DashBoard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             margin: const EdgeInsets.only(top: 10),
             decoration: BoxDecoration(
-              color: AppColor.accentColor,
+              color: AppColor.primaryColor,
               borderRadius: BorderRadius.circular(10),
               boxShadow: [
                 BoxShadow(
@@ -159,6 +147,104 @@ class DashBoard extends StatelessWidget {
           if (false) const FlowSelectCards()
         ],
       ),
+    );
+  }
+}
+
+class DashboardDrawer extends StatelessWidget {
+  const DashboardDrawer({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(20),
+          bottomRight: Radius.circular(20),
+        ),
+      ),
+      child: SafeArea(
+          child: Column(
+        children: [
+          // DrawerHeader(
+
+          //   child: Text('Drawer Header'),
+          // ),
+          Container(
+            height: 100,
+            width: double.infinity,
+            color: AppColor.primaryColor,
+            child: Center(
+              child: Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: SizedBox(
+                      height: 45,
+                      width: 45,
+                      child: Image.network(
+                        'https://picsum.photos/400/500',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  const XMargin(16),
+                  const Text(
+                    'John Doe',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ).paddingHorizontal(padding: 16),
+          ),
+          for (var i = 0; i < 5; i++)
+            ListTile(
+                leading: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: SizedBox(
+                    height: 35,
+                    width: 35,
+                    child: Image.network(
+                      'https://picsum.photos/300/${i}00',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                title: Text('School $i',
+                    style: Theme.of(context).textTheme.headline5)),
+          const Spacer(),
+          SizedBox(
+            height: 50,
+            width: double.infinity,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColor.tertiaryColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              onPressed: () {},
+              child: Text(
+                'Logout',
+                style: Theme.of(context).textTheme.headline5!.copyWith(
+                      color: Colors.white,
+                    ),
+              ),
+            ),
+          ).paddingSymmetric()
+        ],
+      )),
+      // child: Scaffold(
+      //   body: Center(
+      //     child: Text('Drawer'),
+      //   ),
+      // ),
     );
   }
 }
