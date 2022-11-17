@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 Map<String, dynamic> decode(String token) {
   try {
@@ -25,6 +26,9 @@ bool isTokenExpired(String token) {
       final DateTime expirationDate = DateTime.fromMillisecondsSinceEpoch(0)
           .add(Duration(seconds: decodedToken["exp"]));
       // If the current date is after the expiration date, the token is already expired
+      if (DateTime.now().isAfter(expirationDate)) {
+        log('Token is expired');
+      }
       return DateTime.now().isAfter(expirationDate);
     } else {
       return true;

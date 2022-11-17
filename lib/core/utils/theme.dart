@@ -18,6 +18,9 @@ class AppTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
           foregroundColor: Colors.white,
           backgroundColor: AppColor.secondaryColor, // foreground (text) color
         ),

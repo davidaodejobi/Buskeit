@@ -13,9 +13,9 @@ class DashBoard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(
-          Icons.menu_sharp,
-        ),
+        // leading: const Icon(
+        //   Icons.menu_sharp,
+        // ),
         actions: [
           IconButton(
             onPressed: () {
@@ -35,6 +35,19 @@ class DashBoard extends StatelessWidget {
           ),
         ],
         title: const Text('Buskeit'),
+      ),
+      drawer: const Drawer(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(20),
+            bottomRight: Radius.circular(20),
+          ),
+        ),
+        child: Scaffold(
+          body: Center(
+            child: Text('Drawer'),
+          ),
+        ),
       ),
       body: Column(
         children: [

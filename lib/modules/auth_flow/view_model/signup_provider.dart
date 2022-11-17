@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:buskeit/core/models/res_model.dart';
 import 'package:buskeit/modules/auth_flow/screens/user_details.dart';
 import 'package:buskeit/modules/auth_flow/screens/verify_email.dart';
 import 'package:buskeit/modules/dashboard/screens/dash_board.dart';
@@ -183,7 +182,7 @@ class SignupProvider with ChangeNotifier {
   }
 
   storeToken(response) {
-    ResModel res = resModelFromJson(response.data);
+    ResponseModel res = responseModelFromJson(response.data);
     log('res: $res');
     String myToken = res.tokens!.access;
 

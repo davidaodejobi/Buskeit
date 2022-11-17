@@ -27,10 +27,6 @@ class SignUp extends StatelessWidget {
           const YMargin(0),
           Column(
             children: [
-              Text(
-                'Sign Up',
-                style: Theme.of(context).textTheme.headline3,
-              ),
               const YMargin(10),
               Text(
                 'Enter your email and create a password',

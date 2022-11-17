@@ -24,8 +24,7 @@ class VerifyEmail extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Verify'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      body: ListView(
         children: [
           const YMargin(40),
           Text('Verification code',

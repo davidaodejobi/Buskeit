@@ -9,14 +9,14 @@ String responseModelToJson(ResponseModel data) => json.encode(data.toJson());
 
 class ResponseModel {
   ResponseModel({
-    this.success = false,
-    this.message = '',
+    this.success,
+    this.message,
     this.tokens,
     this.user,
   });
 
-  final bool success;
-  final String message;
+  final bool? success;
+  final String? message;
   final TokensModel? tokens;
   final dynamic user;
 

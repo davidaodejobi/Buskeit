@@ -19,6 +19,9 @@ Future<void> main() async {
   StorageService storageService = getIt<StorageService>();
   String? theToken = await storageService.readItem(key: token);
   bool expired = theToken == null ? true : isTokenExpired(theToken);
+  if (expired) {
+    storageService.deleteItem(key: token);
+  }
   runApp(MyApp(
     isExpired: expired,
   ));
