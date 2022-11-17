@@ -50,10 +50,10 @@ extension AppPadding on Widget {
       );
 
   paddingLTRB(
-          {double left = 16,
-          double top = 16,
-          double right = 16,
-          double bottom = 16}) =>
+          {double left = 0,
+          double top = 0,
+          double right = 0,
+          double bottom = 0}) =>
       Padding(
         padding: EdgeInsets.fromLTRB(left, top, right, bottom),
         child: this,

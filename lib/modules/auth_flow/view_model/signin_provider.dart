@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:buskeit/modules/dashboard_flow/screens/flow_selection.dart';
+import 'package:buskeit/modules/dashboard/screens/dash_board.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 

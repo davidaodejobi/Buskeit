@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:buskeit/core/models/res_model.dart';
 import 'package:buskeit/modules/auth_flow/screens/user_details.dart';
 import 'package:buskeit/modules/auth_flow/screens/verify_email.dart';
-import 'package:buskeit/modules/dashboard_flow/screens/flow_selection.dart';
+import 'package:buskeit/modules/dashboard/screens/dash_board.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 

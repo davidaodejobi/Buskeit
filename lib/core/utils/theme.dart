@@ -25,19 +25,24 @@ class AppTheme {
       inputDecorationTheme: const InputDecorationTheme(
         border: InputBorder.none,
       ),
-      appBarTheme: const AppBarTheme(
-        color: Colors.transparent,
-        iconTheme: IconThemeData(
+      appBarTheme: AppBarTheme(
+        elevation: 10,
+        surfaceTintColor: Colors.white,
+        shadowColor: AppColor.secondaryColor.withOpacity(0.2),
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.white,
+        // color: Colors.transparent,
+        iconTheme: const IconThemeData(
           color: Colors.black,
         ),
         centerTitle: true,
-        titleTextStyle: TextStyle(
+        titleTextStyle: const TextStyle(
           fontSize: 22.0,
           fontFamily: 'Aeonik',
           color: Colors.black,
           fontWeight: FontWeight.w500,
         ),
-        elevation: 0,
+        // elevation: 0,
       ),
       dividerTheme: const DividerThemeData(
         color: AppColor.greyColor2,

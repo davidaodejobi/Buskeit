@@ -1,10 +1,10 @@
 import 'package:buskeit/constant/helper/helper.dart';
+import 'package:buskeit/modules/dashboard/screens/bus_mgmt.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constant/constant.dart';
 import '../../../shared/shared.dart';
 import '../widgets/flow_select_cards.dart';
-import 'individual_verification.dart';
 
 class DashBoard extends StatelessWidget {
   const DashBoard({Key? key}) : super(key: key);
@@ -33,30 +33,17 @@ class DashBoard extends StatelessWidget {
               ),
             ),
           ),
-          // IconButton(
-          //   onPressed: () {},
-          //   icon: const Icon(
-          //     Icons.notifications_none,
-          //   ),
-          // ),
         ],
         title: const Text('Buskeit'),
-        elevation: 10,
-        surfaceTintColor: Colors.white,
-        shadowColor: AppColor.secondaryColor.withOpacity(0.2),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.white,
       ),
       body: Column(
-        // mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const DashboardHeaderCard(),
-          // const YMargin(10),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             margin: const EdgeInsets.only(top: 10),
             decoration: BoxDecoration(
-              color: const Color(0xffBC2B5C),
+              color: AppColor.accentColor,
               borderRadius: BorderRadius.circular(10),
               boxShadow: [
                 BoxShadow(
@@ -89,7 +76,7 @@ class DashBoard extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const IndividualVerification(),
+                          builder: (context) => const BusMgmt(),
                         ),
                       );
                     },
@@ -99,8 +86,6 @@ class DashBoard extends StatelessWidget {
                           child: Container(
                             margin: const EdgeInsets.symmetric(horizontal: 6),
                             width: double.infinity,
-                            // padding: const EdgeInsets.symmetric(
-                            //     horizontal: 16, vertical: 10),
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(10),
@@ -114,7 +99,6 @@ class DashBoard extends StatelessWidget {
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
-                              //  add shadow to image withtext here
                               child: Stack(
                                 children: [
                                   Image.network(
@@ -160,33 +144,6 @@ class DashBoard extends StatelessWidget {
                 }).paddingSymmetric(horizontal: 10),
           ),
           if (false) const FlowSelectCards()
-          // Text(
-          //   'Click one of the following options to sign up',
-          //   style: Theme.of(context).textTheme.headline5!.copyWith(
-          //         color: AppColor.greyColor,
-          //       ),
-          // ),
-          // const YMargin(50),
-          // BorderButton(
-          //   text: 'Individual',
-          //   onPressed: () {
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(
-          //         builder: (context) => const SignUp(
-          //           name: 'Individual',
-          //         ),
-          //       ),
-          //     );
-          //   },
-          // ),
-          // ,
-          // const YMargin(20),
-          // BorderButton(
-          //   text: 'School',
-          //   onPressed: () {},
-          // ),
-          // const YMargin(50),
         ],
       ),
     );

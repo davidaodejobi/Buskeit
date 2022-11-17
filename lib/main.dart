@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:buskeit/modules/dashboard_flow/screens/flow_selection.dart';
+import 'package:buskeit/modules/dashboard/screens/dash_board.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
