@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:buskeit/modules/dashboard/screens/dash_board.dart';
+import 'package:buskeit/modules/dashboard/view_model/dahboard_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -42,6 +43,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<SignupProvider>(create: (_) => SignupProvider()),
         ChangeNotifierProvider<SigninProvider>(create: (_) => SigninProvider()),
+        ChangeNotifierProvider<DashboardProvider>(
+            create: (_) => DashboardProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

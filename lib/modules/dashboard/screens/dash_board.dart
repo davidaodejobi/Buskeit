@@ -1,16 +1,24 @@
 import 'package:buskeit/constant/helper/helper.dart';
+import 'package:buskeit/modules/auth_flow/screens/sign_in.dart';
 import 'package:buskeit/modules/dashboard/screens/bus_mgmt.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../constant/constant.dart';
+import '../../../core/core.dart';
+import '../../../locator.dart';
 import '../../../shared/shared.dart';
+import '../view_model/dahboard_provider.dart';
 import '../widgets/flow_select_cards.dart';
+
+StorageService storageService = getIt<StorageService>();
 
 class DashBoard extends StatelessWidget {
   const DashBoard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<DashboardProvider>(context);
     return Scaffold(
       appBar: AppBar(
         // leading: const Icon(
@@ -19,7 +27,7 @@ class DashBoard extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pop(context);
+              provider.setHasWorkSpace();
             },
             icon: ClipRRect(
               borderRadius: BorderRadius.circular(10),
@@ -40,111 +48,119 @@ class DashBoard extends StatelessWidget {
       body: Column(
         children: [
           const DashboardHeaderCard(),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            margin: const EdgeInsets.only(top: 10),
-            decoration: BoxDecoration(
-              color: AppColor.primaryColor,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColor.greyColor.withOpacity(0.2),
-                  blurRadius: 10,
-                  offset: const Offset(0, 5),
-                ),
-              ],
-            ),
-            child: Text(
-              'School Board',
-              style: Theme.of(context).textTheme.headline5!.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+          if (provider.hasWorkSpace)
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              margin: const EdgeInsets.only(top: 10),
+              decoration: BoxDecoration(
+                color: AppColor.primaryColor,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColor.greyColor.withOpacity(0.2),
+                    blurRadius: 10,
+                    offset: const Offset(0, 5),
                   ),
+                ],
+              ),
+              child: Text(
+                'School Board',
+                style: Theme.of(context).textTheme.headline5!.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
             ),
-          ),
-          Expanded(
-            child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 20,
-                  mainAxisSpacing: 20,
-                ),
-                shrinkWrap: true,
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const BusMgmt(),
-                        ),
-                      );
-                    },
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 6),
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: AppColor.greyColor.withOpacity(0.2),
-                                  blurRadius: 10,
-                                  offset: const Offset(3, 5),
-                                ),
-                              ],
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Stack(
-                                children: [
-                                  Image.network(
-                                    'https://picsum.photos/200/300',
-                                    fit: BoxFit.cover,
-                                    height: double.infinity,
-                                    width: double.infinity,
-                                  ),
-                                  Positioned(
-                                    bottom: 0,
-                                    left: 0,
-                                    right: 0,
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 16, vertical: 10),
-                                      decoration: BoxDecoration(
-                                        color: Colors.black.withOpacity(0.5),
-                                        borderRadius: const BorderRadius.only(
-                                          bottomLeft: Radius.circular(10),
-                                          bottomRight: Radius.circular(10),
-                                        ),
-                                      ),
-                                      child: Text(
-                                        'Bus Mgmt',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline5!
-                                            .copyWith(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                      ),
-                                    ),
+          if (provider.hasWorkSpace)
+            Expanded(
+              child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 20,
+                    mainAxisSpacing: 20,
+                  ),
+                  shrinkWrap: true,
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const BusMgmt(),
+                          ),
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 6),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppColor.greyColor.withOpacity(0.2),
+                                    blurRadius: 10,
+                                    offset: const Offset(3, 5),
                                   ),
                                 ],
                               ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Stack(
+                                  children: [
+                                    Image.network(
+                                      'https://picsum.photos/200/300',
+                                      fit: BoxFit.cover,
+                                      height: double.infinity,
+                                      width: double.infinity,
+                                    ),
+                                    Positioned(
+                                      bottom: 0,
+                                      left: 0,
+                                      right: 0,
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16, vertical: 10),
+                                        decoration: BoxDecoration(
+                                          color: Colors.black.withOpacity(0.5),
+                                          borderRadius: const BorderRadius.only(
+                                            bottomLeft: Radius.circular(10),
+                                            bottomRight: Radius.circular(10),
+                                          ),
+                                        ),
+                                        child: Text(
+                                          'Bus Mgmt',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline5!
+                                              .copyWith(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  );
-                }).paddingSymmetric(horizontal: 10),
-          ),
-          if (false) const FlowSelectCards()
+                        ],
+                      ),
+                    );
+                  }).paddingSymmetric(horizontal: 10),
+            ),
+          if (!provider.hasWorkSpace)
+            Column(
+              children: const [
+                YMargin(10),
+                FlowSelectCards(),
+              ],
+            )
         ],
       ),
     );
@@ -229,7 +245,15 @@ class DashboardDrawer extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                storageService.deleteItem(key: token);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SignIn(),
+                  ),
+                );
+              },
               child: Text(
                 'Logout',
                 style: Theme.of(context).textTheme.headline5!.copyWith(
@@ -328,7 +352,7 @@ class SchoolVerification1 extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Enter your details',
+              'Enter the details od your school for verification',
               style: Theme.of(context).textTheme.headline5!.copyWith(
                     color: AppColor.greyColor,
                   ),
