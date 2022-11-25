@@ -1,0 +1,31 @@
+name: Set up job
+
+on:  
+  push:
+  pull_request:
+    branches: 
+      - main
+
+write CI workflow for a flutter app
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'stable'
+          flutter-version: '3.3.8'
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Format all files in the lib directory
+        run: flutter format lib
+      - name: Run flutter test
+        run: flutter test
+      - name: Run static analysis
+        run: flutter analyze lib
+      - name: Post Install Dependencies
+        run: flutter pub get
+      - name: Post Run actions/checkout@v3
+        run: flutter pub get
+      
