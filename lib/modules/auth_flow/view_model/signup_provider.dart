@@ -2,56 +2,87 @@ import 'dart:developer';
 
 import 'package:buskeit/core/services/api/base.api.dart';
 import 'package:buskeit/modules/auth_flow/screens/user_details.dart';
-import 'package:buskeit/modules/auth_flow/screens/verify_email.dart';
 import 'package:buskeit/modules/dashboard/screens/dash_board.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../constant/constant.dart';
 import '../../../core/core.dart';
 import '../../../locator.dart';
 import '../../../shared/alert_dialog.dart';
-
-// var testData = {
-//   "success": true,
-//   "detail": "Account activated successfully",
-//   "tokens": {
-//     "access":
-//         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY4Njk4MTM1LCJpYXQiOjE2Njg2MTE3MzUsImp0aSI6ImFhMDZhMDgzMWI2NTQxZjVhNjU4MDJmMmYzYzM1OGQ2IiwidXNlcl9pZCI6Mjl9.0BxfVpJJU2JohXtJWW9zhPtX2MgzWMX4qxNLyTuir-Y",
-//     "refresh":
-//         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY2OTIxNjUzNSwiaWF0IjoxNjY4NjExNzM1LCJqdGkiOiJjYWJlNmNkZThkNGY0MDU5YjE2YTg4Y2U4YjlhYThhZiIsInVzZXJfaWQiOjI5fQ.vYYirXBk3rRY1wa0ZsmUvgnTZfpdZDIfgABFyPl8HNw"
-//   },
-//   "user": {
-//     "identifier": null,
-//     "email": "actand253@hamham.uk",
-//     "first_name": null,
-//     "last_name": null,
-//     "image": "http://buskeit.herokuapp.com/media/profiles/image-default.png",
-//     "is_active": true,
-//     "is_staff": false,
-//     "is_verified": true,
-//     "channel_accounts": []
-//   }
-// };
+import '../screens/verify_email.dart';
 
 class SignupProvider with ChangeNotifier {
   StorageService storageService = getIt<StorageService>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final passwordCController = TextEditingController();
-  final verifyController = TextEditingController();
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
   final phoneNumberController = TextEditingController();
-  final List<String> _gender = ['Male', 'Female'];
-  String selectedGender = 'Male';
+  bool maleButton = false;
+  bool femaleButton = false;
+  String selectedGender = '';
 
-  dropDownSelect(String gender) {
-    selectedGender = gender;
+  bool validate(BuildContext context) {
+    if (firstNameController.text.isEmpty) {
+      showTopSnackBar(
+        Overlay.of(context)!,
+        const CustomSnackBar.error(
+          message: 'First Name is required',
+        ),
+      );
+      return false;
+    }
+    if (lastNameController.text.isEmpty) {
+      showTopSnackBar(
+        Overlay.of(context)!,
+        const CustomSnackBar.error(
+          message: 'Last Name is required',
+        ),
+      );
+      return false;
+    }
+    if (selectedGender.isEmpty) {
+      showTopSnackBar(
+        Overlay.of(context)!,
+        const CustomSnackBar.error(
+          message: 'Gender is required',
+        ),
+      );
+      return false;
+    }
+    if (phoneNumberController.text.isEmpty) {
+      showTopSnackBar(
+        Overlay.of(context)!,
+        const CustomSnackBar.error(
+          message: 'Phone Number is required',
+        ),
+      );
+      return false;
+    }
+    return true;
+  }
+
+  void onGenderChanged(String? value) {
+    selectedGender = value!;
     notifyListeners();
   }
 
-  List<String> get gender => _gender;
+  selectGender(String gender) {
+    if (gender == 'Male') {
+      maleButton = true;
+      femaleButton = false;
+      selectedGender = 'Male';
+    } else {
+      femaleButton = true;
+      maleButton = false;
+      selectedGender = 'Female';
+    }
+    notifyListeners();
+  }
 
   bool isLoading = false;
 
@@ -60,10 +91,15 @@ class SignupProvider with ChangeNotifier {
         passwordController.text.isNotEmpty) {
       return true;
     } else {
-      showAlertDialog(context: context, message: 'Passwords do not match');
+      showTopSnackBar(
+        Overlay.of(context)!,
+        const CustomSnackBar.error(
+          backgroundColor: AppColor.accentColor,
+          message: "Password and Confirm Password must be same and not empty",
+        ),
+      );
       return false;
     }
-    // return passwordCController.text == passwordController.text ? true : false;
   }
 
   startLoading() {
@@ -73,6 +109,15 @@ class SignupProvider with ChangeNotifier {
 
   stopLoading() {
     isLoading = false;
+    notifyListeners();
+  }
+
+  signupMock() {
+    startLoading();
+    Future.delayed(const Duration(seconds: 3), () {
+      stopLoading();
+    });
+
     notifyListeners();
   }
 
@@ -96,9 +141,8 @@ class SignupProvider with ChangeNotifier {
           ),
         );
       });
-
       stopLoading();
-      return responseModel;
+      return;
     } on DioError catch (e) {
       stopLoading();
       var errorMessage =
@@ -111,13 +155,14 @@ class SignupProvider with ChangeNotifier {
 
   Future verify({
     required BuildContext context,
+    required String code,
   }) async {
     startLoading();
     try {
       ResponseModel responseModel = ResponseModel();
       await connect().post("/auth/register/verify", data: {
         "email": emailController.text,
-        "code": verifyController.text,
+        "code": code,
       }).then((value) async {
         storeToken(value);
         if (value.statusCode == 200) {

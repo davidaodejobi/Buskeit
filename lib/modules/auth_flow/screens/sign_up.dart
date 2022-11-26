@@ -1,5 +1,6 @@
+import 'package:buskeit/modules/auth_flow/screens/verify_email.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../constant/constant.dart';
@@ -23,10 +24,15 @@ class SignUp extends StatelessWidget {
             children: [
               const YMargin(10),
               Text(
-                'Enter your email and create a password',
-                style: Theme.of(context).textTheme.headline5!.copyWith(
-                      color: AppColor.greyColor,
+                'Buskeit',
+                style: Theme.of(context).textTheme.headline2!.copyWith(
+                      color: AppColor.secondaryColor,
                     ),
+              ),
+              const YMargin(35),
+              Text(
+                'Sign up to Buskeit',
+                style: Theme.of(context).textTheme.headline3,
               ),
               const YMargin(30),
               TextFieldWithHeader(
@@ -34,65 +40,107 @@ class SignUp extends StatelessWidget {
                 title: 'Email',
                 hintText: 'You@gmail.com',
               ),
-              const YMargin(16),
+              const YMargin(25),
               TextFieldWithHeader(
                 controller: provider.passwordController,
                 title: 'Password',
                 hintText: '********',
               ),
-              const YMargin(16),
+              const YMargin(25),
               TextFieldWithHeader(
                 controller: provider.passwordCController,
-                title: 'Confirm Password',
+                title: 'Confirm password',
                 hintText: '********',
               ),
-              const YMargin(20),
+              const YMargin(10),
+              //remind me button
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 20,
+                    height: 20,
+                    decoration: const BoxDecoration(
+                      color: AppColor.secondaryColor,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5),
+                      ),
+                    ),
+                    child: const Icon(
+                      Icons.check,
+                      size: 15,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const XMargin(10),
+                  Text(
+                    'Remind me',
+                    style: Theme.of(context).textTheme.headline6!.copyWith(
+                          fontWeight: FontWeight.w500,
+                        ),
+                  ),
+                ],
+              ),
+
+              const YMargin(30),
               SizedBox(
-                  width: double.infinity,
-                  height: 50,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        if (provider.validatePassword(context)) {
-                          provider.signup(context: context);
-                        }
-                      },
-                      child: provider.isLoading
-                          ? Lottie.asset(
-                              'assets/animations/loading.json',
-                            )
-                          : Text(
-                              'Create my account',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline5!
-                                  .copyWith(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () {
+                    // if (provider.validatePassword(context)) {
+                    //   provider.signup(context: context);
+                    // }
+                    provider.signupMock();
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const VerifyEmail(
+                                  email: 'hello',
+                                )));
+                  },
+                  child: provider.isLoading
+                      ? const SpinKitChasingDots(
+                          color: Colors.white,
+                          size: 30,
+                        )
+                      : Text(
+                          'Create account',
+                          style:
+                              Theme.of(context).textTheme.headline5!.copyWith(
                                     color: Colors.white,
                                   ),
-                            ))),
+                        ),
+                ),
+              ),
               const YMargin(20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Already have an account?',
+                    style: Theme.of(context).textTheme.headline6!.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: AppColor.greyColor,
+                        ),
+                  ),
+                  const XMargin(10),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      'Sign in',
+                      style: Theme.of(context).textTheme.headline6!.copyWith(
+                            fontWeight: FontWeight.w500,
+                            color: AppColor.secondaryColor,
+                          ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
-          // Column(
-          //   children: [
-          //     Text(
-          //       'By signing up you are agreeing to our',
-          //       style: Theme.of(context).textTheme.headline6!.copyWith(
-          //             color: AppColor.greyColor,
-          //             fontWeight: FontWeight.w500,
-          //           ),
-          //     ),
-          //     const YMargin(8),
-          //     InkWell(
-          //       onTap: () {},
-          //       child: Text(
-          //         'Terms and conditions',
-          //         style: Theme.of(context).textTheme.headline6!.copyWith(
-          //               fontWeight: FontWeight.w500,
-          //               color: AppColor.primaryColor,
-          //             ),
-          //       ),
-          //     ),
-          //   ],
           // ),
         ],
       ).paddingSymmetric(

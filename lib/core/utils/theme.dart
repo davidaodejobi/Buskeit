@@ -22,7 +22,7 @@ class AppTheme {
             borderRadius: BorderRadius.circular(5),
           ),
           foregroundColor: Colors.white,
-          backgroundColor: AppColor.secondaryColor, // foreground (text) color
+          backgroundColor: AppColor.secondaryColor,
         ),
       ),
       inputDecorationTheme: const InputDecorationTheme(
@@ -62,7 +62,7 @@ class AppTheme {
           fontSize: 36.0,
           fontFamily: 'Aeonik',
           color: Colors.black,
-          fontWeight: FontWeight.normal,
+          fontWeight: FontWeight.bold,
         ),
         headline3: TextStyle(
           fontSize: 27.0,
