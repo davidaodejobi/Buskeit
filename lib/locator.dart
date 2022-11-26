@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 
-import 'core/services/storage.service.dart';
+import 'core/core.dart';
 
 GetIt getIt = GetIt.I;
 
@@ -10,4 +10,5 @@ setup() {
   // Services
   // getIt.registerLazySingleton<NavigationService>(() => NavigationService());
   getIt.registerLazySingleton<StorageService>(() => StorageService());
+  getIt.registerLazySingleton<HiveStorageService>(() => HiveStorageService());
 }

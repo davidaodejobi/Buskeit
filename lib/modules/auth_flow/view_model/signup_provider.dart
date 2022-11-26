@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:buskeit/core/services/api/base.api.dart';
 import 'package:buskeit/modules/auth_flow/screens/user_details.dart';
 import 'package:buskeit/modules/auth_flow/screens/verify_email.dart';
 import 'package:buskeit/modules/dashboard/screens/dash_board.dart';

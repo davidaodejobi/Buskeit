@@ -1,4 +1,3 @@
-import 'package:buskeit/constant/helper/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -8,19 +7,14 @@ import '../../../../shared/shared.dart';
 import '../view_model/signup_provider.dart';
 
 class SignUp extends StatelessWidget {
-  final String name;
   const SignUp({
     Key? key,
-    required this.name,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<SignupProvider>(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(name),
-      ),
       body: ListView(
         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
