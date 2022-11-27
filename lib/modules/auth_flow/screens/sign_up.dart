@@ -7,6 +7,7 @@ import '../../../../constant/constant.dart';
 import '../../../../shared/shared.dart';
 import '../view_model/signup_provider.dart';
 import '../widgets/bottom_verify.dart';
+import '../widgets/save_password_button.dart';
 
 class SignUp extends StatelessWidget {
   const SignUp({
@@ -54,42 +55,23 @@ class SignUp extends StatelessWidget {
                 hintText: '********',
               ),
               const YMargin(10),
-              //remind me button
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Container(
-                    width: 20,
-                    height: 20,
-                    decoration: const BoxDecoration(
-                      color: AppColor.secondaryColor,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5),
-                      ),
-                    ),
-                    child: const Icon(
-                      Icons.check,
-                      size: 15,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const XMargin(10),
-                  Text(
-                    'Remember me',
-                    style: Theme.of(context).textTheme.headline6!.copyWith(
-                          fontWeight: FontWeight.w500,
-                        ),
+                  SavePasswordButton(
+                    savePassword: provider.savePassword,
+                    onTap: (() {
+                      provider.toggleSavePassword();
+                    }),
                   ),
                 ],
               ),
-
               const YMargin(30),
               SizedBox(
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () {
-                    if (provider.validatePassword(context)) {
+                    if (provider.validateSignup(context)) {
                       verificationModal(context);
                     }
                   },

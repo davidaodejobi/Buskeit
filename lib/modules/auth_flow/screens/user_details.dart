@@ -108,7 +108,7 @@ class UserDetails extends StatelessWidget {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () {
-                    if (provider.validate(context)) {
+                    if (provider.validateUserDetails(context)) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(

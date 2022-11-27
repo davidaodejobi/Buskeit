@@ -1,12 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:buskeit/constant/helper/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
+import 'package:buskeit/constant/helper/helper.dart';
+import 'package:buskeit/modules/dashboard/screens/dash_board.dart';
+
 import '../../../constant/app_color.dart';
 import '../../../shared/shared.dart';
 import '../view_model/signin_provider.dart';
+import '../widgets/save_password_button.dart';
 import 'sign_up.dart';
 
 class SignIn extends StatelessWidget {
@@ -52,33 +55,11 @@ class SignIn extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: 20,
-                          height: 20,
-                          decoration: const BoxDecoration(
-                            color: AppColor.secondaryColor,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(5),
-                            ),
-                          ),
-                          child: const Icon(
-                            Icons.check,
-                            size: 15,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const XMargin(10),
-                        Text(
-                          'Remember me',
-                          style:
-                              Theme.of(context).textTheme.headline6!.copyWith(
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                        ),
-                      ],
+                    SavePasswordButton(
+                      savePassword: provider.savePassword,
+                      onTap: (() {
+                        provider.toggleSavePassword();
+                      }),
                     ),
                     GestureDetector(
                       onTap: () {
@@ -106,6 +87,13 @@ class SignIn extends StatelessWidget {
                   height: 50,
                   child: ElevatedButton(
                     onPressed: () {
+                      if (provider.validateSignup(context)) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const DashBoard(),
+                            ));
+                      }
                       // if (provider.validatePassword(context)) {
                       //   verificationModal(context);
                       // }

@@ -5,13 +5,11 @@ import 'package:buskeit/modules/auth_flow/screens/user_details.dart';
 import 'package:buskeit/modules/dashboard/screens/dash_board.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../constant/constant.dart';
 import '../../../core/core.dart';
 import '../../../locator.dart';
-import '../../../shared/alert_dialog.dart';
+import '../../../shared/shared.dart';
 
 class SignupProvider with ChangeNotifier {
   StorageService storageService = getIt<StorageService>();
@@ -29,49 +27,40 @@ class SignupProvider with ChangeNotifier {
     "Female",
   ];
 
+  bool savePassword = false;
+  void toggleSavePassword() {
+    savePassword = !savePassword;
+    notifyListeners();
+  }
+
   onGenderSelect(String gender) {
     selectedGender = gender;
     notifyListeners();
   }
 
-  bool validate(BuildContext context) {
+  bool validateUserDetails(BuildContext context) {
     if (firstNameController.text.isEmpty) {
-      showTopSnackBar(
-        Overlay.of(context)!,
-        const CustomSnackBar.error(
-          backgroundColor: AppColor.accentColor,
-          message: 'First Name is required',
-        ),
+      errorToast(
+        context,
+        message: 'First Name is required',
       );
       return false;
     }
     if (lastNameController.text.isEmpty) {
-      showTopSnackBar(
-        Overlay.of(context)!,
-        const CustomSnackBar.error(
-          backgroundColor: AppColor.accentColor,
-          message: 'Last Name is required',
-        ),
-      );
+      errorToast(context, message: 'Last Name is required');
       return false;
     }
     if (selectedGender == "Select Gender") {
-      showTopSnackBar(
-        Overlay.of(context)!,
-        const CustomSnackBar.error(
-          backgroundColor: AppColor.accentColor,
-          message: 'Please select a gender',
-        ),
+      errorToast(
+        context,
+        message: 'Please select a gender',
       );
       return false;
     }
     if (phoneNumberController.text.isEmpty) {
-      showTopSnackBar(
-        Overlay.of(context)!,
-        const CustomSnackBar.error(
-          backgroundColor: AppColor.accentColor,
-          message: 'Phone Number is required',
-        ),
+      errorToast(
+        context,
+        message: 'Phone Number is required',
       );
       return false;
     }
@@ -80,26 +69,28 @@ class SignupProvider with ChangeNotifier {
 
   bool isLoading = false;
 
-  validatePassword(context) {
+  validateSignup(context) {
+    var emailRegex = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
     if (emailController.text.isEmpty) {
-      showTopSnackBar(
-        Overlay.of(context)!,
-        const CustomSnackBar.error(
-          backgroundColor: AppColor.accentColor,
-          message: 'Email is required',
-        ),
+      errorToast(
+        context,
+        message: 'Email is required',
+      );
+      return false;
+      // email validation regex
+    } else if (!emailRegex.hasMatch(emailController.text)) {
+      errorToast(
+        context,
+        message: 'Please enter a valid Email',
       );
       return false;
     } else if (passwordController.text == passwordCController.text &&
         passwordController.text.isNotEmpty) {
       return true;
     } else {
-      showTopSnackBar(
-        Overlay.of(context)!,
-        const CustomSnackBar.error(
-          backgroundColor: AppColor.accentColor,
-          message: "Password and Confirm Password must be same and not empty",
-        ),
+      errorToast(
+        context,
+        message: "Password and Confirm Password must be same and not empty",
       );
       return false;
     }

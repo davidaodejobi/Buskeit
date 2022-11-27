@@ -15,6 +15,38 @@ class SigninProvider with ChangeNotifier {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   bool isLoading = false;
+  bool savePassword = false;
+
+  void toggleSavePassword() {
+    savePassword = !savePassword;
+    notifyListeners();
+  }
+
+  validateSignup(context) {
+    var emailRegex = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    if (emailController.text.isEmpty) {
+      errorToast(
+        context,
+        message: 'please enter your email',
+      );
+      return false;
+      // email validation regex
+    } else if (!emailRegex.hasMatch(emailController.text)) {
+      errorToast(
+        context,
+        message: 'Please enter a valid Email',
+      );
+      return false;
+    } else if (passwordController.text.isEmpty) {
+      errorToast(
+        context,
+        message: 'Please enter your password',
+      );
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   startLoading() {
     isLoading = true;
