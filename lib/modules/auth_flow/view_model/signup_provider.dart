@@ -39,6 +39,7 @@ class SignupProvider with ChangeNotifier {
       showTopSnackBar(
         Overlay.of(context)!,
         const CustomSnackBar.error(
+          backgroundColor: AppColor.accentColor,
           message: 'First Name is required',
         ),
       );
@@ -48,6 +49,7 @@ class SignupProvider with ChangeNotifier {
       showTopSnackBar(
         Overlay.of(context)!,
         const CustomSnackBar.error(
+          backgroundColor: AppColor.accentColor,
           message: 'Last Name is required',
         ),
       );
@@ -57,6 +59,7 @@ class SignupProvider with ChangeNotifier {
       showTopSnackBar(
         Overlay.of(context)!,
         const CustomSnackBar.error(
+          backgroundColor: AppColor.accentColor,
           message: 'Please select a gender',
         ),
       );
@@ -66,6 +69,7 @@ class SignupProvider with ChangeNotifier {
       showTopSnackBar(
         Overlay.of(context)!,
         const CustomSnackBar.error(
+          backgroundColor: AppColor.accentColor,
           message: 'Phone Number is required',
         ),
       );
@@ -77,7 +81,16 @@ class SignupProvider with ChangeNotifier {
   bool isLoading = false;
 
   validatePassword(context) {
-    if (passwordController.text == passwordCController.text &&
+    if (emailController.text.isEmpty) {
+      showTopSnackBar(
+        Overlay.of(context)!,
+        const CustomSnackBar.error(
+          backgroundColor: AppColor.accentColor,
+          message: 'Email is required',
+        ),
+      );
+      return false;
+    } else if (passwordController.text == passwordCController.text &&
         passwordController.text.isNotEmpty) {
       return true;
     } else {

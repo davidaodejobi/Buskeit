@@ -109,8 +109,6 @@ class UserDetails extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     if (provider.validate(context)) {
-                      // provider.nextPage();
-                      // provider.completeRegistration(context: context);
                       Navigator.push(
                         context,
                         MaterialPageRoute(

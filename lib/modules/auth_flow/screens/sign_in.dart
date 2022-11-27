@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:buskeit/constant/helper/helper.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constant/app_color.dart';
@@ -17,99 +17,147 @@ class SignIn extends StatelessWidget {
     final provider = Provider.of<SigninProvider>(context);
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            // crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              YMargin(MediaQuery.of(context).size.height * 0.1),
-              Center(
-                child: Column(
+        child: ListView(
+          // crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const YMargin(0),
+            Column(
+              children: [
+                const YMargin(10),
+                Text(
+                  'Buskeit',
+                  style: Theme.of(context).textTheme.headline2!.copyWith(
+                        color: AppColor.secondaryColor,
+                      ),
+                ),
+                const YMargin(35),
+                Text(
+                  'Sign in to Buskeit',
+                  style: Theme.of(context).textTheme.headline3,
+                ),
+                const YMargin(30),
+                TextFieldWithHeader(
+                  controller: provider.emailController,
+                  title: 'Email',
+                  hintText: 'You@gmail.com',
+                ),
+                const YMargin(25),
+                TextFieldWithHeader(
+                  controller: provider.passwordController,
+                  title: 'Confirm password',
+                  hintText: '********',
+                ),
+                const YMargin(10),
+                //remind me button
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Image.asset(
-                      'assets/images/hello.png',
-                      height: MediaQuery.of(context).size.height * 0.1,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 20,
+                          height: 20,
+                          decoration: const BoxDecoration(
+                            color: AppColor.secondaryColor,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(5),
+                            ),
+                          ),
+                          child: const Icon(
+                            Icons.check,
+                            size: 15,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const XMargin(10),
+                        Text(
+                          'Remember me',
+                          style:
+                              Theme.of(context).textTheme.headline6!.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                        ),
+                      ],
                     ),
-                    const YMargin(16),
-                    Text(
-                      'Welcome',
-                      style: Theme.of(context).textTheme.headline2,
-                    ),
-                    Text(
-                      'To keep connected with us, please login with your login details',
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                    const YMargin(40),
-                    TextFieldWithHeader(
-                      controller: provider.emailController,
-                      title: 'Email',
-                      hintText: 'You@gmail.com',
-                    ),
-                    const YMargin(20),
-                    TextFieldWithHeader(
-                      controller: provider.passwordController,
-                      title: 'Password',
-                      hintText: '********',
-                    ),
-                    const YMargin(16),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 50,
-                      child: ElevatedButton(
-                          onPressed: () {
-                            provider.login(
-                              email: provider.emailController.text,
-                              password: provider.passwordController.text,
-                              context: context,
-                            );
-                          },
-                          child: provider.isLoading
-                              ? Lottie.asset(
-                                  'assets/animations/loading.json',
-                                )
-                              : Text(
-                                  'Log in',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline5!
-                                      .copyWith(color: Colors.white),
-                                )),
+                    GestureDetector(
+                      onTap: () {
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => const SignIn(),
+                        //   ),
+                        // );
+                      },
+                      child: Text(
+                        'Forgot password?',
+                        style: Theme.of(context).textTheme.headline6!.copyWith(
+                              fontWeight: FontWeight.w500,
+                              color: AppColor.secondaryColor,
+                            ),
+                      ),
                     ),
                   ],
                 ),
-              ),
-              TextButton(
-                style: Theme.of(context).textButtonTheme.style!.copyWith(
-                      overlayColor: MaterialStateProperty.all(
-                          AppColor.tertiaryColor.withOpacity(0.2)),
-                    ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SignUp(),
-                    ),
-                  );
-                },
-                child: RichText(
-                    text: TextSpan(children: [
-                  TextSpan(
-                    text: 'Already have an account? ',
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                          color: AppColor.greyColor,
-                        ),
+
+                const YMargin(50),
+                SizedBox(
+                  width: double.infinity,
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // if (provider.validatePassword(context)) {
+                      //   verificationModal(context);
+                      // }
+                    },
+                    child: provider.isLoading
+                        ? const SpinKitChasingDots(
+                            color: Colors.white,
+                            size: 30,
+                          )
+                        : Text(
+                            'Sign in',
+                            style:
+                                Theme.of(context).textTheme.headline5!.copyWith(
+                                      color: Colors.white,
+                                    ),
+                          ),
                   ),
-                  TextSpan(
-                    text: 'Sign up',
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                          color: AppColor.primaryColor,
-                        ),
-                  ),
-                ])),
-              ),
-            ],
-          ),
+                ),
+                const YMargin(20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Don\'t have an account yet?',
+                      style: Theme.of(context).textTheme.headline6!.copyWith(
+                            fontWeight: FontWeight.w500,
+                            color: AppColor.greyColor,
+                          ),
+                    ),
+                    const XMargin(10),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SignUp(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'Sign up',
+                        style: Theme.of(context).textTheme.headline6!.copyWith(
+                              fontWeight: FontWeight.w500,
+                              color: AppColor.secondaryColor,
+                            ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
         ).paddingSymmetric(horizontal: 16),
       ),
     );
