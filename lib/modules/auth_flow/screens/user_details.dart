@@ -35,87 +35,62 @@ class UserDetails extends StatelessWidget {
                 style: Theme.of(context).textTheme.headline3,
               ),
               const YMargin(40),
-              Row(
-                mainAxisSize: MainAxisSize.max,
+              Column(
                 children: [
-                  Expanded(
-                    flex: 3,
-                    child: Column(
-                      children: [
-                        TextFieldWithHeader(
-                          controller: provider.firstNameController,
-                          title: 'First Name',
-                          hintText: 'John',
-                        ),
-                        const YMargin(20),
-                        TextFieldWithHeader(
-                          controller: provider.lastNameController,
-                          title: 'Lastname',
-                          hintText: 'Doe',
-                        ),
-                      ],
-                    ),
+                  TextFieldWithHeader(
+                    controller: provider.firstNameController,
+                    title: 'First Name',
+                    hintText: 'John',
                   ),
-                  const XMargin(20),
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Gender',
-                          style:
-                              Theme.of(context).textTheme.headline6!.copyWith(
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                  const YMargin(20),
+                  TextFieldWithHeader(
+                    controller: provider.lastNameController,
+                    title: 'Lastname',
+                    hintText: 'Doe',
+                  ),
+                ],
+              ),
+              const YMargin(20),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Gender',
+                    style: Theme.of(context).textTheme.headline6!.copyWith(
+                          fontWeight: FontWeight.w500,
                         ),
-                        const YMargin(10),
-                        SizedBox(
-                          height: 142,
-                          width: double.infinity,
-                          child: Column(
-                            children: [
-                              const YMargin(10),
-                              Expanded(
-                                child: GenderButton(
-                                  onPressed: (() {
-                                    provider.selectGender('Male');
-                                  }),
-                                  bgColor: !provider.maleButton
-                                      ? Colors.transparent
-                                      : AppColor.secondaryColor,
-                                  borderColor: provider.maleButton
-                                      ? Colors.transparent
-                                      : AppColor.greyColor2,
-                                  text: 'Male',
-                                  textColor: provider.maleButton
-                                      ? Colors.white
-                                      : AppColor.greyColor2,
+                  ),
+                  const YMargin(10),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5.0),
+                      border: Border.all(
+                        color: AppColor.greyColor2,
+                        width: 1.0,
+                      ),
+                    ),
+                    child: Expanded(
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                            value: provider.selectedGender,
+                            items: provider.genderOptions
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: Theme.of(context).textTheme.headline6,
                                 ),
-                              ),
-                              const YMargin(20),
-                              Expanded(
-                                child: GenderButton(
-                                  onPressed: (() {
-                                    provider.selectGender('Female');
-                                  }),
-                                  bgColor: !provider.femaleButton
-                                      ? Colors.transparent
-                                      : AppColor.secondaryColor,
-                                  borderColor: provider.femaleButton
-                                      ? Colors.transparent
-                                      : AppColor.greyColor2,
-                                  text: 'Female',
-                                  textColor: provider.femaleButton
-                                      ? Colors.white
-                                      : AppColor.greyColor2,
-                                ),
-                              ),
-                              const YMargin(10),
-                            ],
-                          ),
-                        ),
-                      ],
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              provider.onGenderSelect(value!);
+                            }),
+                      ),
                     ),
                   ),
                 ],
@@ -187,48 +162,6 @@ class UserDetails extends StatelessWidget {
       ).paddingSymmetric(
         horizontal: 16,
         vertical: 16,
-      ),
-    );
-  }
-}
-
-class GenderButton extends StatelessWidget {
-  final String text;
-  final VoidCallback onPressed;
-  final Color bgColor;
-  final Color textColor;
-  final Color borderColor;
-  const GenderButton({
-    Key? key,
-    required this.text,
-    required this.onPressed,
-    required this.bgColor,
-    required this.textColor,
-    required this.borderColor,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(5),
-      onTap: onPressed,
-      child: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: bgColor,
-          borderRadius: BorderRadius.circular(5),
-          border: Border.all(
-            color: borderColor,
-          ),
-        ),
-        child: Center(
-          child: Text(
-            text,
-            style: Theme.of(context).textTheme.headline6!.copyWith(
-                  color: textColor,
-                ),
-          ),
-        ),
       ),
     );
   }

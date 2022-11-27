@@ -12,7 +12,6 @@ import '../../../constant/constant.dart';
 import '../../../core/core.dart';
 import '../../../locator.dart';
 import '../../../shared/alert_dialog.dart';
-import '../screens/verify_email.dart';
 
 class SignupProvider with ChangeNotifier {
   StorageService storageService = getIt<StorageService>();
@@ -22,9 +21,18 @@ class SignupProvider with ChangeNotifier {
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
   final phoneNumberController = TextEditingController();
-  bool maleButton = false;
-  bool femaleButton = false;
-  String selectedGender = '';
+
+  String selectedGender = "Select Gender";
+  List<String> genderOptions = [
+    "Select Gender",
+    "Male",
+    "Female",
+  ];
+
+  onGenderSelect(String gender) {
+    selectedGender = gender;
+    notifyListeners();
+  }
 
   bool validate(BuildContext context) {
     if (firstNameController.text.isEmpty) {
@@ -45,11 +53,11 @@ class SignupProvider with ChangeNotifier {
       );
       return false;
     }
-    if (selectedGender.isEmpty) {
+    if (selectedGender == "Select Gender") {
       showTopSnackBar(
         Overlay.of(context)!,
         const CustomSnackBar.error(
-          message: 'Gender is required',
+          message: 'Please select a gender',
         ),
       );
       return false;
@@ -64,24 +72,6 @@ class SignupProvider with ChangeNotifier {
       return false;
     }
     return true;
-  }
-
-  void onGenderChanged(String? value) {
-    selectedGender = value!;
-    notifyListeners();
-  }
-
-  selectGender(String gender) {
-    if (gender == 'Male') {
-      maleButton = true;
-      femaleButton = false;
-      selectedGender = 'Male';
-    } else {
-      femaleButton = true;
-      maleButton = false;
-      selectedGender = 'Female';
-    }
-    notifyListeners();
   }
 
   bool isLoading = false;
@@ -132,14 +122,14 @@ class SignupProvider with ChangeNotifier {
         "password1": passwordController.text,
         "password2": passwordCController.text,
       }).then((value) async {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => VerifyEmail(
-              email: emailController.text,
-            ),
-          ),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => VerifyEmail(
+        //       email: emailController.text,
+        //     ),
+        //   ),
+        // );
       });
       stopLoading();
       return;
