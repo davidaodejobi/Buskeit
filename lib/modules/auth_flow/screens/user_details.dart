@@ -45,7 +45,7 @@ class UserDetails extends StatelessWidget {
                   const YMargin(20),
                   TextFieldWithHeader(
                     controller: provider.lastNameController,
-                    title: 'Lastname',
+                    title: 'Last Name',
                     hintText: 'Doe',
                   ),
                 ],

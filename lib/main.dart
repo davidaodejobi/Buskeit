@@ -10,6 +10,7 @@ import 'package:buskeit/modules/onboarding/onboarding.dart';
 import 'package:buskeit/modules/onboarding/view_models/onboarding_provider.dart';
 
 import 'constant/constant.dart';
+import 'core/services/api/authentication_api.dart';
 import 'core/services/services.dart';
 import 'core/utils/theme.dart';
 import 'core/utils/token_decode.dart';
@@ -55,6 +56,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<SignupProvider>(create: (_) => SignupProvider()),
         ChangeNotifierProvider<SigninProvider>(create: (_) => SigninProvider()),
+        ChangeNotifierProvider<AuthenticationApiService>(
+            create: (_) => AuthenticationApiService()),
         ChangeNotifierProvider<DashboardProvider>(
             create: (_) => DashboardProvider()),
         ChangeNotifierProvider<OnBoardingProvider>(

@@ -1,10 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:buskeit/core/services/api/authentication_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 import 'package:buskeit/constant/helper/helper.dart';
-import 'package:buskeit/modules/dashboard/screens/dash_board.dart';
 
 import '../../../constant/app_color.dart';
 import '../../../shared/shared.dart';
@@ -47,7 +47,7 @@ class SignIn extends StatelessWidget {
                 const YMargin(25),
                 TextFieldWithHeader(
                   controller: provider.passwordController,
-                  title: 'Confirm password',
+                  title: 'Password',
                   hintText: '********',
                 ),
                 const YMargin(10),
@@ -87,16 +87,12 @@ class SignIn extends StatelessWidget {
                   height: 50,
                   child: ElevatedButton(
                     onPressed: () {
-                      if (provider.validateSignup(context)) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const DashBoard(),
-                            ));
-                      }
-                      // if (provider.validatePassword(context)) {
-                      //   verificationModal(context);
-                      // }
+                      Provider.of<AuthenticationApiService>(context,
+                              listen: false)
+                          .login(
+                        email: 'talk2ayomi1@gmail.com',
+                        password: '123',
+                      );
                     },
                     child: provider.isLoading
                         ? const SpinKitChasingDots(

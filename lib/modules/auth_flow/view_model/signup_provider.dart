@@ -132,6 +132,7 @@ class SignupProvider with ChangeNotifier {
         //     builder: (context) => VerifyEmail(
         //       email: emailController.text,
         //     ),
+
         //   ),
         // );
       });
@@ -224,7 +225,7 @@ class SignupProvider with ChangeNotifier {
   storeToken(response) {
     ResponseModel res = responseModelFromJson(response.data);
     log('res: $res');
-    String myToken = res.tokens!.access;
+    String myToken = res.tokens!.access!;
 
     storageService.storeItem(key: token, value: myToken);
     // read token from storage

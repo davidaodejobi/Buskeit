@@ -1,4 +1,3 @@
-import 'package:buskeit/constant/helper/helper.dart';
 import 'package:buskeit/modules/auth_flow/screens/sign_in.dart';
 import 'package:buskeit/modules/dashboard/screens/bus_mgmt.dart';
 import 'package:flutter/material.dart';
@@ -369,7 +368,7 @@ class SchoolVerification1 extends StatelessWidget {
                 const YMargin(16),
                 TextFieldWithHeader(
                   controller: TextEditingController(),
-                  title: 'Lastname',
+                  title: 'Last Name',
                   hintText: 'Doe',
                 ),
               ],

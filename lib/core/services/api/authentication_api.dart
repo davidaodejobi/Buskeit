@@ -1,106 +1,76 @@
+import 'dart:developer';
+
 import 'package:buskeit/core/core.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
+import '../../../constant/constant.dart';
 import '../../../locator.dart';
+import 'base.api.dart';
 
-class AuthenticationApiService {
+class AuthenticationApiService with ChangeNotifier {
   StorageService storageService = getIt<StorageService>();
-  // UserService userService = getIt<UserService>();
 
-  // Future signup({String credential}) async {
-  //   Map credentialMap = jsonDecode(credential);
-  //   credentialMap.removeWhere((key, value) => value == null);
-  //   try {
-  //     ResModel resModel = ResModel();
-  //     await connect().post("/auth", data: credentialMap).then((value) async {
-  //       storeToken(value);
-  //       Response response = await connect().get("/user/me");
-  //       if (response.statusCode == 200) {
-  //         storeUserDetails(response);
-  //       }
-  //       resModel = resModelFromJson(value.data);
-  //     });
-
-  //     await futureAwait();
-  //     return resModel;
-  //   } on DioError catch (e) {
-  //     return resModelFromJson(e.response.data);
+  // var testData = {
+  //   "success": true,
+  //   "detail": "Login is successful",
+  //   "tokens": {
+  //     "access": 'null',
+  //     "refresh":
+  //         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY3MDE3MjMyOCwiaWF0IjoxNjY5NTY3NTI4LCJqdGkiOiI4OWY5ODA3ZmY5MTc0MjBhOWU0YWZjMmQ4YmYwZTMxOCIsInVzZXJfaWQiOjN9.I-ICQblqUiGAIC2XEVZSsEyW0KOfMKVnxabC0U5ZFVM"
+  //   },
+  //   "user": {
+  //     "identifier": "USN0ZA5CV1SPIOD4V",
+  //     "email": "talk2ayomi1@gmail.com",
+  //     "first_name": null,
+  //     "last_name": null,
+  //     "image": "http://buskeit.herokuapp.com/media/profiles/image-default.png",
+  //     "is_active": true,
+  //     "is_staff": false,
+  //     "is_verified": true,
+  //     "channel_accounts": []
   //   }
-  // // }
+  // };
 
-  // Future login({required String email, required String password}) async {
-  //   try {
-  //     ResponseModel responseModel = ResponseModel();
-  //     await connect().post("/auth/token", data: {
-  //       "email": email,
-  //       "password": password,
-  //     }).then((value) async {
-  //       storeToken(value);
-  //       // Response response = await connect().get("/user/me");
-  //       // if (response.statusCode == 200) {
-  //       //   storeUserDetails(response);
-  //       // }
-  //     });
+  Future login({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      ResponseModel responseModel = ResponseModel();
+      Response response = await connect().post("/auth/token", data: {
+        "email": email,
+        "password": password,
+      });
+      log('response.statusCode: ${response.statusCode}');
+      responseModel = responseModelFromJson(response.data);
+      storeToken(response.data);
+      // if (response.statusCode == 200) {
+      //   // print('response.data: ${response.data}');
+      //   print('responseModel: ${responseModel.detail}');
+      // }
+      return responseModel;
+    } on DioError catch (e) {
+      print(
+          'errorModelFromJson(e.response!.data): ${errorModelFromJson(e.response!.data)}');
+      return errorModelFromJson(e.response!.data);
+    }
+  }
 
-  //     // await futureAwait();
-  //     print('responseModel: ${responseModel.message}');
-  //     return responseModel;
-  //   } on DioError catch (e) {
-  //     return errorModelFromJson(e.response!.data);
-  //   }
-  // }
+  storeToken(response) {
+    ResponseModel res = responseModelFromJson(response);
+    String myToken = res.tokens!.access!;
 
-  // Future validatePassword({String email, int otp, String password}) async {
-  //   try {
-  //     Response response = await connect().post("/auth/password/forgot/validate",
-  //         data: {"email": email, "otp": otp, "password": password});
+    if (myToken != '') {
+      storageService.storeItem(key: token, value: myToken);
+    }
 
-  //     return resModelFromJson(response.data);
-  //   } on DioError catch (e) {
-  //     return resModelFromJson(e.response.data);
-  //   }
-  // }
+    // storageService.storeItem(key: token, value: myToken);
+    // read token from storage
+    // storageService.readItem(key: token).then((value) {});
+  }
 
-  // Future changePassword({
-  //   String currentPassword,
-  //   String newPassword,
-  //   String confirmPassword,
-  // }) async {
-  //   try {
-  //     Response response = await connect().post("/auth/password/change", data: {
-  //       "currentPassword": currentPassword,
-  //       "newPassword": newPassword,
-  //       "confirmPassword": confirmPassword,
-  //     });
-
-  //     return resModelFromJson(response.data);
-  //   } on DioError catch (e) {
-  //     return resModelFromJson(e.response.data);
-  //   }
-  // }
-
-  // futureAwait() async {
-  //   await Initializer().initialCalls();
-  // }
-
-  // storeToken(response) {
-  //   ResponseModel res = responseModelFromJson(response.data);
-  //   String token = 'access ${res.tokens!.access}';
-
-  //   storageService.storeItem(key: token, value: token);
-  // }
-
-  // storeUserDetails(response) {
-  //   ResponseModel res = responseModelFromJson(response.data);
-  //   UserModel user = UserModel.fromJson(res.user);
-
-  //   // userService.credentials = user;
-  //   storageService.storeItem(
-  //       key: individualDetails, value: userModelToJson(user));
-  // }
-
-  // void logout() {
-  //   storageService.isLoggedIn = false;
-  //   storageService.deleteItem(key: token);
-  //   storageService.deleteItem(key: userDetails);
-  // }
+  removeToken() {
+    storageService.deleteItem(key: token);
+  }
 }

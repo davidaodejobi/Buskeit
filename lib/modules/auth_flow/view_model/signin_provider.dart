@@ -72,7 +72,6 @@ class SigninProvider with ChangeNotifier {
       }).then((value) async {
         if (value.statusCode == 200) {
           // responseModel = ResponseModel.fromJson(value.data);
-
           storeToken(value);
           Navigator.pushReplacement(
             context,
@@ -111,7 +110,7 @@ class SigninProvider with ChangeNotifier {
 
   storeToken(response) {
     ResponseModel res = responseModelFromJson(response.data);
-    String myToken = res.tokens!.access;
+    String myToken = res.tokens!.access!;
 
     storageService.storeItem(key: token, value: myToken);
     // read token from storage
@@ -122,14 +121,14 @@ class SigninProvider with ChangeNotifier {
     storageService.deleteItem(key: token);
   }
 
-  storeUserDetails(response) {
-    ResponseModel res = responseModelFromJson(response.data);
-    UserModel user = UserModel.fromJson(res.user);
+  // storeUserDetails(response) {
+  //   ResponseModel res = responseModelFromJson(response.data);
+  //   UserModel user = UserModel.fromJson(res.user);
 
-    // userService.credentials = user;
-    storageService.storeItem(
-        key: individualDetails, value: userModelToJson(user));
-  }
+  //   // userService.credentials = user;
+  //   storageService.storeItem(
+  //       key: individualDetails, value: userModelToJson(user));
+  // }
 }
 
   // bool btnActive = false;
