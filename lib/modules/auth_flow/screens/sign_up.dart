@@ -1,7 +1,9 @@
-import 'package:buskeit/modules/auth_flow/screens/sign_in.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:buskeit/shared/app_elevated_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+
+import 'package:buskeit/modules/auth_flow/screens/sign_in.dart';
 
 import '../../../../constant/constant.dart';
 import '../../../../shared/shared.dart';
@@ -66,28 +68,10 @@ class SignUp extends StatelessWidget {
                 ],
               ),
               const YMargin(30),
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (provider.validateSignup(context)) {
-                      verificationModal(context);
-                    }
-                  },
-                  child: provider.isLoading
-                      ? const SpinKitChasingDots(
-                          color: Colors.white,
-                          size: 30,
-                        )
-                      : Text(
-                          'Create account',
-                          style:
-                              Theme.of(context).textTheme.headline5!.copyWith(
-                                    color: Colors.white,
-                                  ),
-                        ),
-                ),
+              AppElevatedButton(
+                isLoading: false,
+                text: 'Sign up',
+                onTap: () {},
               ),
               const YMargin(20),
               Row(

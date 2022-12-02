@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:buskeit/modules/dashboard/view_model/school_workspace_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
@@ -61,6 +62,8 @@ class MyApp extends StatelessWidget {
             create: (_) => DashboardProvider()),
         ChangeNotifierProvider<OnBoardingProvider>(
             create: (_) => OnBoardingProvider()),
+        ChangeNotifierProvider<SchoolWorkspaceProvider>(
+            create: (_) => SchoolWorkspaceProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
