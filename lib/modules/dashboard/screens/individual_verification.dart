@@ -1,4 +1,3 @@
-import 'package:buskeit/constant/helper/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -18,8 +17,7 @@ class IndividualVerification extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const YMargin(40),
-          Text('Verification code',
-              style: Theme.of(context).textTheme.headline3),
+          Text('Join workspace', style: Theme.of(context).textTheme.headline3),
           const YMargin(20),
           Text(
             'Please enter the school verification code sent to your email by the school admin',
@@ -46,8 +44,8 @@ class IndividualVerification extends StatelessWidget {
                 inactiveFillColor: Colors.transparent,
                 shape: PinCodeFieldShape.box,
                 borderRadius: BorderRadius.circular(5),
-                fieldHeight: 45,
-                fieldWidth: 45,
+                fieldHeight: MediaQuery.of(context).size.width * 0.1,
+                fieldWidth: MediaQuery.of(context).size.width * 0.1,
                 activeFillColor: Colors.white,
               ),
               animationDuration: const Duration(milliseconds: 300),

@@ -20,10 +20,14 @@ class BaseDashBoard extends StatelessWidget {
     final provider = Provider.of<DashboardProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        // leading: const Icon(
-        //   Icons.menu_sharp,
-        // ),
         actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const FaIcon(
+              FontAwesomeIcons.bell,
+              color: Colors.black,
+            ),
+          ),
           IconButton(
             onPressed: () {
               provider.setHasWorkSpace();
@@ -41,7 +45,6 @@ class BaseDashBoard extends StatelessWidget {
             ),
           ),
         ],
-        title: const Text('Buskeit'),
       ),
       drawer: const DashboardDrawer(),
       body: const Dashboard(),
@@ -165,194 +168,3 @@ class DashboardHeaderCard extends StatelessWidget {
     );
   }
 }
-
-class SchoolVerification1 extends StatelessWidget {
-  const SchoolVerification1({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('School Verification'),
-        ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Enter the details od your school for verification',
-              style: Theme.of(context).textTheme.headline5!.copyWith(
-                    color: AppColor.greyColor,
-                  ),
-            ),
-            const YMargin(30),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextFieldWithHeader(
-                  controller: TextEditingController(),
-                  title: 'First Name',
-                  hintText: 'John',
-                ),
-                const YMargin(16),
-                TextFieldWithHeader(
-                  controller: TextEditingController(),
-                  title: 'Last Name',
-                  hintText: 'Doe',
-                ),
-              ],
-            ),
-            const YMargin(16),
-            TextFieldWithHeader(
-              controller: TextEditingController(),
-              title: 'Phone Number',
-              hintText: '+23412345678',
-            ),
-            const YMargin(20),
-            SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const BaseDashBoard(),
-                        ),
-                      );
-                    },
-                    child: Text(
-                      'Create my account',
-                      style: Theme.of(context).textTheme.headline5!.copyWith(
-                            color: Colors.white,
-                          ),
-                    ))),
-            const YMargin(20),
-          ],
-        ).paddingSymmetric(
-          horizontal: 16,
-          vertical: 16,
-        ));
-  }
-}
-
-
-/*
-Column(
-        children: [
-          const DashboardHeaderCard(),
-          if (provider.hasWorkSpace)
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-              margin: const EdgeInsets.only(top: 10),
-              decoration: BoxDecoration(
-                color: AppColor.primaryColor,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColor.greyColor.withOpacity(0.2),
-                    blurRadius: 10,
-                    offset: const Offset(0, 5),
-                  ),
-                ],
-              ),
-              child: Text(
-                'School Board',
-                style: Theme.of(context).textTheme.headline5!.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-            ),
-          if (provider.hasWorkSpace)
-            Expanded(
-              child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 20,
-                    mainAxisSpacing: 20,
-                  ),
-                  shrinkWrap: true,
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const BusMgmt(),
-                          ),
-                        );
-                      },
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 6),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AppColor.greyColor.withOpacity(0.2),
-                                    blurRadius: 10,
-                                    offset: const Offset(3, 5),
-                                  ),
-                                ],
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Stack(
-                                  children: [
-                                    Image.network(
-                                      'https://picsum.photos/200/300',
-                                      fit: BoxFit.cover,
-                                      height: double.infinity,
-                                      width: double.infinity,
-                                    ),
-                                    Positioned(
-                                      bottom: 0,
-                                      left: 0,
-                                      right: 0,
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 16, vertical: 10),
-                                        decoration: BoxDecoration(
-                                          color: Colors.black.withOpacity(0.5),
-                                          borderRadius: const BorderRadius.only(
-                                            bottomLeft: Radius.circular(10),
-                                            bottomRight: Radius.circular(10),
-                                          ),
-                                        ),
-                                        child: Text(
-                                          'Bus Mgmt',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline5!
-                                              .copyWith(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  }).paddingSymmetric(horizontal: 10),
-            ),
-          if (!provider.hasWorkSpace)
-            Column(
-              children: const [
-                YMargin(10),
-                FlowSelectCards(),
-              ],
-            )
-        ],
-      ),
-*/

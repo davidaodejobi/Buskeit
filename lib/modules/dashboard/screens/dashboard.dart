@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:buskeit/modules/dashboard/screens/individual_verification.dart';
 import 'package:buskeit/modules/dashboard/screens/school_workspace_creation.dart';
 import 'package:buskeit/modules/dashboard/widgets/dashboard_card.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,12 @@ class Dashboard extends StatelessWidget {
           DashBoardCard(
             title: 'Join a work space',
             subtitle: 'Tap to join a work space',
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const IndividualVerification()));
+            },
           ),
         ],
       ),

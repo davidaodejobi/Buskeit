@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:buskeit/modules/dashboard/widgets/create_workspace_verifiy.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -54,13 +55,17 @@ class SchoolWorkspaceCreation extends StatelessWidget {
               AppBorderButton(
                 width: MediaQuery.of(context).size.width * 0.3,
                 text: 'Clear',
-                onTap: () {},
+                onTap: () {
+                  provider.clearTextFields();
+                },
               ),
               AppElevatedButton(
                 width: MediaQuery.of(context).size.width * 0.3,
                 isLoading: false,
                 text: 'Next',
-                onTap: () {},
+                onTap: () {
+                  verificationModal(context);
+                },
               ),
             ],
           ),
@@ -71,4 +76,31 @@ class SchoolWorkspaceCreation extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<dynamic> verificationModal(BuildContext context) {
+  return showModalBottomSheet(
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(
+        top: Radius.circular(20),
+      ),
+    ),
+    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+    context: context,
+    enableDrag: false,
+    isScrollControlled: true,
+    //TODO: change to false
+    // isDismissible: false,
+    builder: (context) {
+      return Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+          top: 16,
+          left: 16,
+          right: 16,
+        ),
+        child: const CreateWorkspaceVerify(),
+      );
+    },
+  );
 }
