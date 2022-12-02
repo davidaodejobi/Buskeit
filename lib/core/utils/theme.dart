@@ -9,7 +9,7 @@ class AppTheme {
         color: Colors.black,
       ),
       useMaterial3: true,
-      scaffoldBackgroundColor: Colors.white,
+      scaffoldBackgroundColor: AppColor.backgroundColor,
       textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(
           overlayColor: MaterialStateProperty.all(

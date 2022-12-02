@@ -1,6 +1,7 @@
-import 'package:buskeit/modules/auth_flow/screens/sign_in.dart';
-import 'package:buskeit/modules/dashboard/screens/bus_mgmt.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:buskeit/modules/dashboard/screens/dashboard.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constant/constant.dart';
@@ -8,12 +9,11 @@ import '../../../core/core.dart';
 import '../../../locator.dart';
 import '../../../shared/shared.dart';
 import '../view_model/dahboard_provider.dart';
-import '../widgets/flow_select_cards.dart';
 
 StorageService storageService = getIt<StorageService>();
 
-class DashBoard extends StatelessWidget {
-  const DashBoard({Key? key}) : super(key: key);
+class BaseDashBoard extends StatelessWidget {
+  const BaseDashBoard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,124 +44,7 @@ class DashBoard extends StatelessWidget {
         title: const Text('Buskeit'),
       ),
       drawer: const DashboardDrawer(),
-      body: Column(
-        children: [
-          const DashboardHeaderCard(),
-          if (provider.hasWorkSpace)
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-              margin: const EdgeInsets.only(top: 10),
-              decoration: BoxDecoration(
-                color: AppColor.primaryColor,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColor.greyColor.withOpacity(0.2),
-                    blurRadius: 10,
-                    offset: const Offset(0, 5),
-                  ),
-                ],
-              ),
-              child: Text(
-                'School Board',
-                style: Theme.of(context).textTheme.headline5!.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-            ),
-          if (provider.hasWorkSpace)
-            Expanded(
-              child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 20,
-                    mainAxisSpacing: 20,
-                  ),
-                  shrinkWrap: true,
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const BusMgmt(),
-                          ),
-                        );
-                      },
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 6),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AppColor.greyColor.withOpacity(0.2),
-                                    blurRadius: 10,
-                                    offset: const Offset(3, 5),
-                                  ),
-                                ],
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Stack(
-                                  children: [
-                                    Image.network(
-                                      'https://picsum.photos/200/300',
-                                      fit: BoxFit.cover,
-                                      height: double.infinity,
-                                      width: double.infinity,
-                                    ),
-                                    Positioned(
-                                      bottom: 0,
-                                      left: 0,
-                                      right: 0,
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 16, vertical: 10),
-                                        decoration: BoxDecoration(
-                                          color: Colors.black.withOpacity(0.5),
-                                          borderRadius: const BorderRadius.only(
-                                            bottomLeft: Radius.circular(10),
-                                            bottomRight: Radius.circular(10),
-                                          ),
-                                        ),
-                                        child: Text(
-                                          'Bus Mgmt',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline5!
-                                              .copyWith(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  }).paddingSymmetric(horizontal: 10),
-            ),
-          if (!provider.hasWorkSpace)
-            Column(
-              children: const [
-                YMargin(10),
-                FlowSelectCards(),
-              ],
-            )
-        ],
-      ),
+      body: const Dashboard(),
     );
   }
 }
@@ -174,100 +57,45 @@ class DashboardDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(20),
-          bottomRight: Radius.circular(20),
-        ),
-      ),
       child: SafeArea(
-          child: Column(
-        children: [
-          // DrawerHeader(
+        child: Column(
+          children: [
+            // DrawerHeader(
 
-          //   child: Text('Drawer Header'),
-          // ),
-          Container(
-            height: 100,
-            width: double.infinity,
-            color: AppColor.primaryColor,
-            child: Center(
-              child: Row(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: SizedBox(
-                      height: 45,
-                      width: 45,
-                      child: Image.network(
-                        'https://picsum.photos/400/500',
-                        fit: BoxFit.cover,
+            //   child: Text('Drawer Header'),
+            // ),
+            SizedBox(
+              height: 100,
+              width: double.infinity,
+              child: Center(
+                child: Row(
+                  children: [
+                    const CircleAvatar(
+                      radius: 30,
+                      backgroundImage: NetworkImage(
+                        'https://picsum.photos/200/300',
                       ),
                     ),
-                  ),
-                  const XMargin(16),
-                  const Text(
-                    'John Doe',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                    const XMargin(16),
+                    Text(
+                      'Hi John',
+                      style: Theme.of(context).textTheme.headline4!.copyWith(
+                            fontWeight: FontWeight.w500,
+                          ),
                     ),
-                  ),
-                ],
-              ),
-            ).paddingHorizontal(padding: 16),
-          ),
-          for (var i = 0; i < 5; i++)
-            ListTile(
-                leading: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: SizedBox(
-                    height: 35,
-                    width: 35,
-                    child: Image.network(
-                      'https://picsum.photos/300/${i}00',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                  ],
                 ),
-                title: Text('School $i',
-                    style: Theme.of(context).textTheme.headline5)),
-          const Spacer(),
-          SizedBox(
-            height: 50,
-            width: double.infinity,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColor.tertiaryColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              onPressed: () {
-                storageService.deleteItem(key: token);
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const SignIn(),
-                  ),
-                );
-              },
-              child: Text(
-                'Logout',
-                style: Theme.of(context).textTheme.headline5!.copyWith(
-                      color: Colors.white,
-                    ),
-              ),
+              ).paddingHorizontal(padding: 16),
             ),
-          ).paddingSymmetric()
-        ],
-      )),
-      // child: Scaffold(
-      //   body: Center(
-      //     child: Text('Drawer'),
-      //   ),
-      // ),
+            ListTile(
+                leading: const FaIcon(
+                  FontAwesomeIcons.houseLaptop,
+                ),
+                title: Text('Dashboard',
+                    style: Theme.of(context).textTheme.headline5)),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -388,7 +216,7 @@ class SchoolVerification1 extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const DashBoard(),
+                          builder: (context) => const BaseDashBoard(),
                         ),
                       );
                     },
@@ -406,3 +234,125 @@ class SchoolVerification1 extends StatelessWidget {
         ));
   }
 }
+
+
+/*
+Column(
+        children: [
+          const DashboardHeaderCard(),
+          if (provider.hasWorkSpace)
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              margin: const EdgeInsets.only(top: 10),
+              decoration: BoxDecoration(
+                color: AppColor.primaryColor,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColor.greyColor.withOpacity(0.2),
+                    blurRadius: 10,
+                    offset: const Offset(0, 5),
+                  ),
+                ],
+              ),
+              child: Text(
+                'School Board',
+                style: Theme.of(context).textTheme.headline5!.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+            ),
+          if (provider.hasWorkSpace)
+            Expanded(
+              child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 20,
+                    mainAxisSpacing: 20,
+                  ),
+                  shrinkWrap: true,
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const BusMgmt(),
+                          ),
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 6),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppColor.greyColor.withOpacity(0.2),
+                                    blurRadius: 10,
+                                    offset: const Offset(3, 5),
+                                  ),
+                                ],
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Stack(
+                                  children: [
+                                    Image.network(
+                                      'https://picsum.photos/200/300',
+                                      fit: BoxFit.cover,
+                                      height: double.infinity,
+                                      width: double.infinity,
+                                    ),
+                                    Positioned(
+                                      bottom: 0,
+                                      left: 0,
+                                      right: 0,
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16, vertical: 10),
+                                        decoration: BoxDecoration(
+                                          color: Colors.black.withOpacity(0.5),
+                                          borderRadius: const BorderRadius.only(
+                                            bottomLeft: Radius.circular(10),
+                                            bottomRight: Radius.circular(10),
+                                          ),
+                                        ),
+                                        child: Text(
+                                          'Bus Mgmt',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline5!
+                                              .copyWith(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }).paddingSymmetric(horizontal: 10),
+            ),
+          if (!provider.hasWorkSpace)
+            Column(
+              children: const [
+                YMargin(10),
+                FlowSelectCards(),
+              ],
+            )
+        ],
+      ),
+*/

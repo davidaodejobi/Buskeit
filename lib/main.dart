@@ -1,12 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:buskeit/modules/auth_flow/screens/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
 import 'package:buskeit/modules/auth_flow/view_model/signin_provider.dart';
 import 'package:buskeit/modules/dashboard/view_model/dahboard_provider.dart';
-import 'package:buskeit/modules/onboarding/onboarding.dart';
 import 'package:buskeit/modules/onboarding/view_models/onboarding_provider.dart';
 
 import 'constant/constant.dart';
@@ -16,6 +14,7 @@ import 'core/utils/theme.dart';
 import 'core/utils/token_decode.dart';
 import 'locator.dart';
 import 'modules/auth_flow/view_model/signup_provider.dart';
+import 'modules/dashboard/screens/dash_board.dart';
 
 StorageService storageService = getIt<StorageService>();
 HiveStorageService hiveStorageService = getIt<HiveStorageService>();
@@ -68,7 +67,8 @@ class MyApp extends StatelessWidget {
         title: 'Buskeit',
         theme: AppTheme.light(),
         // home: isExpired ? const SignIn() : const DashBoard(),
-        home: !isOnboarded ? Onboarding() : const SignIn(),
+        // home: !isOnboarded ? Onboarding() : const SignIn(),
+        home: const BaseDashBoard(),
       ),
     );
   }

@@ -76,7 +76,7 @@ class SigninProvider with ChangeNotifier {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => const DashBoard(),
+              builder: (context) => const BaseDashBoard(),
             ),
           );
         }
