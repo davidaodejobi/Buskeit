@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:buskeit/modules/dashboard/screens/dashboard.dart';
+import 'package:buskeit/modules/dashboard/screens/services/services.dart';
+import 'package:buskeit/shared/app_border_button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -47,7 +48,8 @@ class BaseDashBoard extends StatelessWidget {
         ],
       ),
       drawer: const DashboardDrawer(),
-      body: const Dashboard(),
+      // body: const Dashboard(),
+      body: const Services(),
     );
   }
 }
@@ -91,11 +93,56 @@ class DashboardDrawer extends StatelessWidget {
               ).paddingHorizontal(padding: 16),
             ),
             ListTile(
-                leading: const FaIcon(
-                  FontAwesomeIcons.houseLaptop,
-                ),
-                title: Text('Dashboard',
-                    style: Theme.of(context).textTheme.headline5)),
+              onTap: () {},
+              leading: const FaIcon(
+                FontAwesomeIcons.houseLaptop,
+              ),
+              title: Text(
+                'Dashboard',
+                style: Theme.of(context).textTheme.headline5,
+              ),
+            ),
+            ListTile(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              leading: const FaIcon(
+                FontAwesomeIcons.servicestack,
+              ),
+              title: Text(
+                'Services',
+                style: Theme.of(context).textTheme.headline5,
+              ),
+            ),
+            ListTile(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              leading: const FaIcon(
+                FontAwesomeIcons.tools,
+              ),
+              title: Text(
+                'Settings',
+                style: Theme.of(context).textTheme.headline5,
+              ),
+            ),
+            ListTile(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              leading: const FaIcon(
+                FontAwesomeIcons.houseLaptop,
+              ),
+              title: Text(
+                'Help',
+                style: Theme.of(context).textTheme.headline5,
+              ),
+            ),
+            AppBorderButton(
+              onTap: () {},
+              text: 'Logout',
+              width: 200,
+            ),
           ],
         ),
       ),

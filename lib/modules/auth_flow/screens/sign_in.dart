@@ -1,12 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:buskeit/core/services/api/authentication_api.dart';
+import 'package:buskeit/constant/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
-import 'package:buskeit/constant/helper/helper.dart';
-
-import '../../../constant/app_color.dart';
 import '../../../shared/shared.dart';
 import '../view_model/signin_provider.dart';
 import '../widgets/save_password_button.dart';
@@ -51,7 +47,6 @@ class SignIn extends StatelessWidget {
                   hintText: '********',
                 ),
                 const YMargin(10),
-                //remind me button
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -61,52 +56,28 @@ class SignIn extends StatelessWidget {
                         provider.toggleSavePassword();
                       }),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => const SignIn(),
-                        //   ),
-                        // );
-                      },
-                      child: Text(
-                        'Forgot password?',
-                        style: Theme.of(context).textTheme.headline6!.copyWith(
-                              fontWeight: FontWeight.w500,
-                              color: AppColor.secondaryColor,
-                            ),
-                      ),
-                    ),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //   },
+                    //   child: Text(
+                    //     'Forgot password?',
+                    //     style: Theme.of(context).textTheme.headline6!.copyWith(
+                    //           fontWeight: FontWeight.w500,
+                    //           color: AppColor.secondaryColor,
+                    //         ),
+                    //   ),
+                    // ),
                   ],
                 ),
-
                 const YMargin(50),
-                SizedBox(
-                  width: double.infinity,
-                  height: 50,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Provider.of<AuthenticationApiService>(context,
-                              listen: false)
-                          .login(
-                        email: 'talk2ayomi1@gmail.com',
-                        password: '123',
-                      );
-                    },
-                    child: provider.isLoading
-                        ? const SpinKitChasingDots(
-                            color: Colors.white,
-                            size: 30,
-                          )
-                        : Text(
-                            'Sign in',
-                            style:
-                                Theme.of(context).textTheme.headline5!.copyWith(
-                                      color: Colors.white,
-                                    ),
-                          ),
-                  ),
+                AppElevatedButton(
+                  onTap: () {
+                    if (provider.validateSignin(context)) {
+                      provider.login(context: context);
+                    }
+                  },
+                  text: 'Sign in',
+                  isLoading: provider.isLoading,
                 ),
                 const YMargin(20),
                 Row(

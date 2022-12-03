@@ -57,6 +57,7 @@ class DashBoardCard extends StatelessWidget {
             const YMargin(10),
             Text(
               subtitle,
+              textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headline6!.copyWith(
                     color: AppColor.greyColor,
                     fontWeight: FontWeight.w500,

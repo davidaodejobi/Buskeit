@@ -12,6 +12,7 @@ import '../../../shared/shared.dart';
 
 class SigninProvider with ChangeNotifier {
   StorageService storageService = getIt<StorageService>();
+  HiveStorageService hiveStorageService = getIt<HiveStorageService>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   bool isLoading = false;
@@ -22,7 +23,7 @@ class SigninProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  validateSignup(context) {
+  validateSignin(context) {
     var emailRegex = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
     if (emailController.text.isEmpty) {
       errorToast(
@@ -59,20 +60,26 @@ class SigninProvider with ChangeNotifier {
   }
 
   Future login({
-    required String email,
-    required String password,
     required BuildContext context,
   }) async {
     startLoading();
     try {
       ResponseModel responseModel = ResponseModel();
-      await connect().post("/auth/token", data: {
-        "email": email,
-        "password": password,
-      }).then((value) async {
+      await connect().post(
+        "/auth/token",
+        data: {
+          "email": emailController,
+          "password": passwordController,
+        },
+      ).then((value) async {
         if (value.statusCode == 200) {
           // responseModel = ResponseModel.fromJson(value.data);
           storeToken(value);
+          if (savePassword) {
+            hiveStorageService.storeItem(
+                key: password, value: passwordController.text);
+          }
+
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -80,25 +87,18 @@ class SigninProvider with ChangeNotifier {
             ),
           );
         }
-        // Response response = await connect().get("/user/me");
-        // if (response.statusCode == 200) {
-        //   storeUserDetails(response);
-        // }
       });
 
       stopLoading();
-      // await futureAwait();
-      // print('responseModel: ${responseModel.message}');
       return responseModel;
     } on HttpException catch (e) {
       stopLoading();
-      print('HttpException: ${e.message}');
       return e.message;
     } on DioError catch (e) {
       stopLoading();
       var errorMessage =
           'We could not process your request at this time, please try again later';
-      showAlertDialog(context: context, message: errorMessage);
+      errorToast(context, message: errorMessage);
       log('e: ${e.message}');
       return errorModelFromJson(e.response!.data);
     } catch (e) {
@@ -120,28 +120,4 @@ class SigninProvider with ChangeNotifier {
   removeToken() {
     storageService.deleteItem(key: token);
   }
-
-  // storeUserDetails(response) {
-  //   ResponseModel res = responseModelFromJson(response.data);
-  //   UserModel user = UserModel.fromJson(res.user);
-
-  //   // userService.credentials = user;
-  //   storageService.storeItem(
-  //       key: individualDetails, value: userModelToJson(user));
-  // }
 }
-
-  // bool btnActive = false;
-  // set _btnActive(bool state) {
-  //   btnActive = state;
-  //   notifyListeners();
-  // }
-
-  
-  // validator() {
-  //   if (passwordController.text.isNotEmpty && emailController.text.isNotEmpty) {
-  //     _btnActive = true;
-  //   } else {
-  //     _btnActive = false;
-  //   }
-  // }

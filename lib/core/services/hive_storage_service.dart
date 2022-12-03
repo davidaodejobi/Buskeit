@@ -19,12 +19,4 @@ class HiveStorageService {
     debugPrint('deleted $key');
     await box.delete(key);
   }
-
-  // void getAll(List<String> keys) async {
-  //   await box.getAll(keys);
-  // }
-
-  // void deleteAllItems() async {
-  //   await box.deleteAll([]);
-  // }
 }
