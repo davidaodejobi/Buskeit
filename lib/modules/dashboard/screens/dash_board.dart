@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:buskeit/modules/dashboard/screens/services/services.dart';
-import 'package:buskeit/shared/app_border_button.dart';
+import 'package:buskeit/modules/dashboard/screens/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +9,7 @@ import '../../../core/core.dart';
 import '../../../locator.dart';
 import '../../../shared/shared.dart';
 import '../view_model/dahboard_provider.dart';
+import '../widgets/dashboard_drawer.dart';
 
 StorageService storageService = getIt<StorageService>();
 
@@ -49,103 +49,8 @@ class BaseDashBoard extends StatelessWidget {
       ),
       drawer: const DashboardDrawer(),
       // body: const Dashboard(),
-      body: const Services(),
-    );
-  }
-}
-
-class DashboardDrawer extends StatelessWidget {
-  const DashboardDrawer({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: SafeArea(
-        child: Column(
-          children: [
-            // DrawerHeader(
-
-            //   child: Text('Drawer Header'),
-            // ),
-            SizedBox(
-              height: 100,
-              width: double.infinity,
-              child: Center(
-                child: Row(
-                  children: [
-                    const CircleAvatar(
-                      radius: 30,
-                      backgroundImage: NetworkImage(
-                        'https://picsum.photos/200/300',
-                      ),
-                    ),
-                    const XMargin(16),
-                    Text(
-                      'Hi John',
-                      style: Theme.of(context).textTheme.headline4!.copyWith(
-                            fontWeight: FontWeight.w500,
-                          ),
-                    ),
-                  ],
-                ),
-              ).paddingHorizontal(padding: 16),
-            ),
-            ListTile(
-              onTap: () {},
-              leading: const FaIcon(
-                FontAwesomeIcons.houseLaptop,
-              ),
-              title: Text(
-                'Dashboard',
-                style: Theme.of(context).textTheme.headline5,
-              ),
-            ),
-            ListTile(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              leading: const FaIcon(
-                FontAwesomeIcons.servicestack,
-              ),
-              title: Text(
-                'Services',
-                style: Theme.of(context).textTheme.headline5,
-              ),
-            ),
-            ListTile(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              leading: const FaIcon(
-                FontAwesomeIcons.tools,
-              ),
-              title: Text(
-                'Settings',
-                style: Theme.of(context).textTheme.headline5,
-              ),
-            ),
-            ListTile(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              leading: const FaIcon(
-                FontAwesomeIcons.houseLaptop,
-              ),
-              title: Text(
-                'Help',
-                style: Theme.of(context).textTheme.headline5,
-              ),
-            ),
-            AppBorderButton(
-              onTap: () {},
-              text: 'Logout',
-              width: 200,
-            ),
-          ],
-        ),
-      ),
+      // body: const Services(),
+      body: const Settings(),
     );
   }
 }
