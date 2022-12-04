@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:buskeit/shared/app_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -71,7 +70,15 @@ class SignUp extends StatelessWidget {
               AppElevatedButton(
                 isLoading: false,
                 text: 'Sign up',
-                onTap: () {},
+                onTap: () {
+                  verificationModal(context);
+                  // if (provider.validateSignup(context)) {
+                  //   provider.signup(context: context).then((value) {
+                  //     if (value == true) {
+                  //     }
+                  //   });
+                  // }
+                },
               ),
               const YMargin(20),
               Row(
@@ -118,23 +125,24 @@ class SignUp extends StatelessWidget {
 
 Future<dynamic> verificationModal(BuildContext context) {
   return showModalBottomSheet(
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      context: context,
-      enableDrag: false,
-      isScrollControlled: true,
-      //TODO: change to false
-      // isDismissible: false,
-      builder: (context) {
-        return Padding(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-            top: 16,
-            left: 16,
-            right: 16,
-          ),
-          child: const BottomVerify(),
-        );
-      });
+    shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+    context: context,
+    enableDrag: false,
+    isScrollControlled: true,
+    //TODO: change to false
+    // isDismissible: false,
+    builder: (context) {
+      return Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+          top: 16,
+          left: 16,
+          right: 16,
+        ),
+        child: const BottomVerify(),
+      );
+    },
+  );
 }

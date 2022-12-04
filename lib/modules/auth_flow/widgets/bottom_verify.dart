@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constant/app_color.dart';
 import '../../../shared/shared.dart';
-import '../screens/user_details.dart';
 import '../view_model/signup_provider.dart';
 
 class BottomVerify extends StatefulWidget {
@@ -89,9 +87,12 @@ class _BottomVerifyState extends State<BottomVerify> {
             useHapticFeedback: true,
             enablePinAutofill: true,
             controller: _pinController,
-            // onCompleted: (v) {
-            //   provider.verify(context: context);
-            // },
+            onCompleted: (v) {
+              provider.verify(
+                context: context,
+                code: _pinController.text,
+              );
+            },
             onChanged: (value) {},
             beforeTextPaste: (text) {
               //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
@@ -102,31 +103,15 @@ class _BottomVerifyState extends State<BottomVerify> {
           ),
         ),
         const YMargin(50),
-        SizedBox(
-          width: double.infinity,
-          height: 50,
-          child: ElevatedButton(
-            onPressed: () {
-              // provider.verify(context: context);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const UserDetails(),
-                ),
-              );
-            },
-            child: provider.isLoading
-                ? const SpinKitChasingDots(
-                    color: Colors.white,
-                    size: 30,
-                  )
-                : Text(
-                    'Verify',
-                    style: Theme.of(context).textTheme.headline5!.copyWith(
-                          color: Colors.white,
-                        ),
-                  ),
-          ),
+        AppElevatedButton(
+          onTap: () {
+            provider.verify(
+              context: context,
+              code: _pinController.text,
+            );
+          },
+          text: 'Verify',
+          isLoading: provider.isLoading,
         ),
         const YMargin(20),
       ],

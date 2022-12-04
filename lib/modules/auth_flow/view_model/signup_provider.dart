@@ -13,6 +13,7 @@ import '../../../shared/shared.dart';
 
 class SignupProvider with ChangeNotifier {
   StorageService storageService = getIt<StorageService>();
+  HiveStorageService hiveStorageService = HiveStorageService();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final passwordCController = TextEditingController();
@@ -120,31 +121,27 @@ class SignupProvider with ChangeNotifier {
   }) async {
     startLoading();
     try {
-      ResponseModel responseModel = ResponseModel();
-      await connect().post("/auth/register", data: {
+      // ResponseModel responseModel = ResponseModel();
+      Response response = await connect().post("/auth/register", data: {
         "email": emailController.text,
         "password1": passwordController.text,
         "password2": passwordCController.text,
-      }).then((value) async {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => VerifyEmail(
-        //       email: emailController.text,
-        //     ),
-
-        //   ),
-        // );
       });
+      if (response.statusCode == 200) {
+        if (savePassword) {
+          hiveStorageService.storeItem(
+              key: password, value: passwordController.text);
+        }
+        return true;
+      }
       stopLoading();
       return;
-    } on DioError catch (e) {
+    } on DioError {
       stopLoading();
       var errorMessage =
           'We could not process your request at this time, please try again later';
       showAlertDialog(context: context, message: errorMessage);
-      print('e: ${e.message}');
-      return errorModelFromJson(e.response!.data);
+      return false;
     }
   }
 
@@ -155,37 +152,40 @@ class SignupProvider with ChangeNotifier {
     startLoading();
     try {
       ResponseModel responseModel = ResponseModel();
-      await connect().post("/auth/register/verify", data: {
+      log('emailController.text: ${emailController.text}');
+      log('code: $code');
+      Response response = await connect().post("/auth/register/verify", data: {
         "email": emailController.text,
         "code": code,
-      }).then((value) async {
-        storeToken(value);
-        if (value.statusCode == 200) {
-          storeToken(value);
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const UserDetails(),
-            ),
-          );
-        }
       });
+
+      log('value: $response');
+      if (response.statusCode == 200) {
+        storeToken(response);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const UserDetails(),
+          ),
+        );
+      }
 
       stopLoading();
       return responseModel;
-    } on DioError catch (e) {
+    } on DioError {
       stopLoading();
       var errorMessage =
           'We could not process your request at this time, please try again later';
-      showAlertDialog(context: context, message: errorMessage);
-      print('e2gfdgy: ${e.message}');
+      errorToast(
+        context,
+        message: errorMessage,
+      );
       return;
     } catch (e) {
       stopLoading();
       var errorMessage =
           'We could not process your request at this time, please try again later';
-      showAlertDialog(context: context, message: errorMessage);
-      print('e: ${e.toString()}');
+      errorToast(context, message: errorMessage);
       // return;
     }
   }
@@ -216,7 +216,7 @@ class SignupProvider with ChangeNotifier {
       stopLoading();
       var errorMessage =
           'We could not process your request at this time, please try again later';
-      showAlertDialog(context: context, message: errorMessage);
+      errorToast(context, message: errorMessage);
       print('e: ${e.message}');
       return errorModelFromJson(e.response!.data);
     }

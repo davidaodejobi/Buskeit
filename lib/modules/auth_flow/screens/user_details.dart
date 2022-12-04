@@ -1,7 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:buskeit/modules/dashboard/screens/dash_board.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 import 'package:buskeit/modules/auth_flow/view_model/signup_provider.dart';
@@ -103,33 +101,14 @@ class UserDetails extends StatelessWidget {
                 hintText: '+23412345678',
               ),
               const YMargin(30),
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (provider.validateUserDetails(context)) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const BaseDashBoard(),
-                        ),
-                      );
-                    }
-                  },
-                  child: provider.isLoading
-                      ? const SpinKitChasingDots(
-                          color: Colors.white,
-                          size: 30,
-                        )
-                      : Text(
-                          'Complete Registration',
-                          style:
-                              Theme.of(context).textTheme.headline5!.copyWith(
-                                    color: Colors.white,
-                                  ),
-                        ),
-                ),
+              AppElevatedButton(
+                onTap: () {
+                  if (provider.validateUserDetails(context)) {
+                    provider.completeRegistration(context: context);
+                  }
+                },
+                text: 'Complete Registration',
+                isLoading: provider.isLoading,
               ),
               const YMargin(20),
               Column(

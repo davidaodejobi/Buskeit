@@ -1,8 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:buskeit/modules/auth_flow/screens/sign_in.dart';
 import 'package:buskeit/modules/dashboard/screens/dash_board.dart';
 import 'package:buskeit/modules/dashboard/view_model/school_workspace_provider.dart';
-import 'package:buskeit/modules/onboarding/onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
@@ -72,11 +70,12 @@ class MyApp extends StatelessWidget {
         title: 'Buskeit',
         theme: AppTheme.light(),
         // home: isExpired ? const SignIn() : const DashBoard(),
-        home: !isOnboarded
-            ? Onboarding()
-            : isExpired
-                ? const SignIn()
-                : const BaseDashBoard(),
+        // home: !isOnboarded
+        //     ? Onboarding()
+        //     : isExpired
+        //         ? const SignIn()
+        //         : const BaseDashBoard(),
+        home: const BaseDashBoard(),
         // home: const BaseDashBoard(),
       ),
     );
