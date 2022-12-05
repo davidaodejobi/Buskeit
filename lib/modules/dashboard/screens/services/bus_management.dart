@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../constant/constant.dart';
 import '../../../../shared/shared.dart';
+import '../../view_model/bus_mgmt_controller.dart';
 import '../../widgets/bus_management/bus_overview_card.dart';
 
 class BusManagement extends StatelessWidget {
@@ -9,6 +11,7 @@ class BusManagement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final busMgmtProvider = Provider.of<BusMgmtProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Bus Management'),
@@ -91,14 +94,17 @@ class BusManagement extends StatelessWidget {
                       ],
                     ).paddingSymmetric(horizontal: 16),
                     const AttendanceTable(),
+                    const YMargin(70),
                   ],
                 ),
               )
             ],
           ),
           //glassmorphism
-          Container(
-            height: 200,
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOut,
+            height: busMgmtProvider.location ? 200 : 0,
             padding: const EdgeInsets.only(
               top: 10,
               right: 16,
@@ -130,8 +136,47 @@ class BusManagement extends StatelessWidget {
                 ).paddingLTRB(top: 10);
               },
             ),
+          ),
+          Positioned(
+            bottom: 10,
+            right: 10,
+            child: InkWell(
+              onTap: () {
+                busMgmtProvider.toggleLocation();
+              },
+              borderRadius: BorderRadius.circular(20),
+              child: Container(
+                height: 48,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColor.greyColor.withOpacity(0.2),
+                      blurRadius: 10,
+                      offset: const Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.location_on,
+                      color: AppColor.accentColor,
+                    ),
+                    const XMargin(10),
+                    Text(
+                      'Current Location',
+                      style: Theme.of(context).textTheme.headline5!.copyWith(
+                            fontWeight: FontWeight.w500,
+                          ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           )
-          // )
         ],
       ),
     );
