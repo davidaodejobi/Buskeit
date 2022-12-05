@@ -13,19 +13,21 @@ class SettingsDropdownButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: SizedBox(
-        height: 45,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              title,
-              style: Theme.of(context).textTheme.headline5,
-            ),
-            const YMargin(0),
-          ],
+    return Expanded(
+      child: GestureDetector(
+        onTap: onTap,
+        child: SizedBox(
+          height: 45,
+          width: double.infinity,
+          child: Row(
+            children: [
+              Text(
+                title,
+                style: Theme.of(context).textTheme.headline5,
+              ),
+              const YMargin(45),
+            ],
+          ),
         ),
       ),
     );

@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:buskeit/modules/auth_flow/view_model/settings_provider.dart';
 import 'package:buskeit/modules/dashboard/screens/dash_board.dart';
 import 'package:buskeit/modules/dashboard/view_model/school_workspace_provider.dart';
 import 'package:flutter/material.dart';
@@ -64,6 +65,8 @@ class MyApp extends StatelessWidget {
             create: (_) => OnBoardingProvider()),
         ChangeNotifierProvider<SchoolWorkspaceProvider>(
             create: (_) => SchoolWorkspaceProvider()),
+        ChangeNotifierProvider<SettingsProvider>(
+            create: (_) => SettingsProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
