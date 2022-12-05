@@ -11,4 +11,5 @@ setup() {
   // getIt.registerLazySingleton<NavigationService>(() => NavigationService());
   getIt.registerLazySingleton<StorageService>(() => StorageService());
   getIt.registerLazySingleton<HiveStorageService>(() => HiveStorageService());
+  getIt.registerLazySingleton<LocationService>(() => LocationService());
 }

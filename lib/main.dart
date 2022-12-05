@@ -70,6 +70,13 @@ class MyApp extends StatelessWidget {
             create: (_) => SettingsProvider()),
         ChangeNotifierProvider<BusMgmtProvider>(
             create: (_) => BusMgmtProvider()),
+        // StreamProvider<String>(
+        //   create: (_) =>
+        //       Location(emitTime: 20, currentLocation: 'Ilorin').location,
+        //   initialData: 'Ilorin',
+        //   catchError: (_, error) => error.toString(),
+        //   // child: MyApp(),
+        // ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
