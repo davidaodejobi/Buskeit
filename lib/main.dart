@@ -17,7 +17,9 @@ import 'core/services/services.dart';
 import 'core/utils/theme.dart';
 import 'core/utils/token_decode.dart';
 import 'locator.dart';
+import 'modules/auth_flow/screens/sign_in.dart';
 import 'modules/auth_flow/view_model/signup_provider.dart';
+import 'modules/onboarding/onboarding.dart';
 
 StorageService storageService = getIt<StorageService>();
 HiveStorageService hiveStorageService = getIt<HiveStorageService>();
@@ -83,12 +85,12 @@ class MyApp extends StatelessWidget {
         title: 'Buskeit',
         theme: AppTheme.light(),
         // home: isExpired ? const SignIn() : const DashBoard(),
-        // home: !isOnboarded
-        //     ? Onboarding()
-        //     : isExpired
-        //         ? const SignIn()
-        //         : const BaseDashBoard(),
-        home: const BaseDashBoard(),
+        home: !isOnboarded
+            ? Onboarding()
+            : isExpired
+                ? const SignIn()
+                : const BaseDashBoard(),
+        // home: const BaseDashBoard(),
         // home: const BaseDashBoard(),
       ),
     );

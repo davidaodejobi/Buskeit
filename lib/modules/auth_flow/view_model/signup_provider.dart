@@ -122,20 +122,18 @@ class SignupProvider with ChangeNotifier {
     startLoading();
     try {
       // ResponseModel responseModel = ResponseModel();
-      Response response = await connect().post("/auth/register", data: {
+      await connect().post("/auth/register", data: {
         "email": emailController.text,
         "password1": passwordController.text,
         "password2": passwordCController.text,
-      });
-      if (response.statusCode == 200) {
+      }).then((value) {
         if (savePassword) {
           hiveStorageService.storeItem(
               key: password, value: passwordController.text);
         }
-        return true;
-      }
+      });
       stopLoading();
-      return;
+      return true;
     } on DioError {
       stopLoading();
       var errorMessage =
@@ -154,24 +152,24 @@ class SignupProvider with ChangeNotifier {
       ResponseModel responseModel = ResponseModel();
       log('emailController.text: ${emailController.text}');
       log('code: $code');
-      Response response = await connect().post("/auth/register/verify", data: {
+      await connect().post("/auth/register/verify", data: {
         "email": emailController.text,
         "code": code,
-      });
-
-      log('value: $response');
-      if (response.statusCode == 200) {
-        storeToken(response);
+      }).then((value) {
+        log('valueeeeeeeeeeeeeeeeeeeeeeeeee: $value');
+        storeToken(value);
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => const UserDetails(),
           ),
         );
-      }
+      });
+
+      // if (response.statusCode == 200) {
+      // }
 
       stopLoading();
-      return responseModel;
     } on DioError {
       stopLoading();
       var errorMessage =
@@ -225,7 +223,7 @@ class SignupProvider with ChangeNotifier {
   storeToken(response) {
     ResponseModel res = responseModelFromJson(response.data);
     log('res: $res');
-    String myToken = res.tokens!.access!;
+    String myToken = res.tokens!.access;
 
     storageService.storeItem(key: token, value: myToken);
     // read token from storage

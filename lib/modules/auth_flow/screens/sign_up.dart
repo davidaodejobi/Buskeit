@@ -68,16 +68,18 @@ class SignUp extends StatelessWidget {
               ),
               const YMargin(30),
               AppElevatedButton(
-                isLoading: false,
+                isLoading: provider.isLoading,
                 text: 'Sign up',
                 onTap: () {
-                  verificationModal(context);
-                  // if (provider.validateSignup(context)) {
-                  //   provider.signup(context: context).then((value) {
-                  //     if (value == true) {
-                  //     }
-                  //   });
-                  // }
+                  // verificationModal(context);
+                  if (provider.validateSignup(context)) {
+                    provider.signup(context: context).then((value) {
+                      print('value: $value');
+                      if (value == true) {
+                        verificationModal(context);
+                      }
+                    });
+                  }
                 },
               ),
               const YMargin(20),

@@ -8,31 +8,31 @@ ResponseModel responseModelFromJson(String str) =>
 String responseModelToJson(ResponseModel data) => json.encode(data.toJson());
 
 class ResponseModel {
-  bool? success;
-  String? detail;
-  TokensModel? tokens;
-  UserModel? user;
+  ResponseModel({
+    this.success,
+    this.message,
+    this.tokens,
+    this.user,
+  });
 
-  ResponseModel({this.success, this.detail, this.tokens, this.user});
+  final bool? success;
+  final String? message;
+  final TokensModel? tokens;
+  final dynamic user;
 
-  ResponseModel.fromJson(Map<String, dynamic> json) {
-    success = json['success'];
-    detail = json['detail'];
-    tokens =
-        json['tokens'] != null ? TokensModel.fromJson(json['tokens']) : null;
-    user = json['user'] != null ? UserModel.fromJson(json['user']) : null;
-  }
+  factory ResponseModel.fromJson(Map<String, dynamic> json) => ResponseModel(
+        success: json["success"],
+        message: json["message"],
+        tokens: json["tokens"] == null
+            ? null
+            : TokensModel.fromJson(json["tokens"]),
+        user: json["user"],
+      );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['success'] = success;
-    data['detail'] = detail;
-    if (tokens != null) {
-      data['tokens'] = tokens!.toJson();
-    }
-    if (user != null) {
-      data['user'] = user!.toJson();
-    }
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "success": success,
+        "message": message,
+        "tokens": tokens!.toJson(),
+        "user": user.toJson(),
+      };
 }

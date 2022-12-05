@@ -7,16 +7,16 @@ String tokensModelToJson(TokensModel data) => json.encode(data.toJson());
 
 class TokensModel {
   TokensModel({
-    this.access,
-    this.refresh,
+    required this.access,
+    required this.refresh,
   });
 
-  final String? access;
-  final String? refresh;
+  final String access;
+  final String refresh;
 
   factory TokensModel.fromJson(Map<String, dynamic> json) => TokensModel(
-        access: json["access"] as String? ?? '',
-        refresh: json["refresh"] as String? ?? '',
+        access: json["access"],
+        refresh: json["refresh"],
       );
 
   Map<String, dynamic> toJson() => {

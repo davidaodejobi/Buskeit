@@ -68,8 +68,8 @@ class SigninProvider with ChangeNotifier {
       await connect().post(
         "/auth/token",
         data: {
-          "email": emailController,
-          "password": passwordController,
+          "email": emailController.text,
+          "password": passwordController.text,
         },
       ).then((value) async {
         if (value.statusCode == 200) {
@@ -90,7 +90,6 @@ class SigninProvider with ChangeNotifier {
       });
 
       stopLoading();
-      return responseModel;
     } on HttpException catch (e) {
       stopLoading();
       return e.message;
@@ -100,17 +99,15 @@ class SigninProvider with ChangeNotifier {
           'We could not process your request at this time, please try again later';
       errorToast(context, message: errorMessage);
       log('e: ${e.message}');
-      return errorModelFromJson(e.response!.data);
     } catch (e) {
       stopLoading();
       print('Exception: ${e.toString()}');
-      return e.toString();
     }
   }
 
   storeToken(response) {
     ResponseModel res = responseModelFromJson(response.data);
-    String myToken = res.tokens!.access!;
+    String myToken = res.tokens!.access;
 
     storageService.storeItem(key: token, value: myToken);
     // read token from storage
