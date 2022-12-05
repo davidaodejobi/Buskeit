@@ -59,8 +59,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<SigninProvider>(create: (_) => SigninProvider()),
         ChangeNotifierProvider<AuthenticationApiService>(
             create: (_) => AuthenticationApiService()),
-        ChangeNotifierProvider<DashboardProvider>(
-            create: (_) => DashboardProvider()),
+        ChangeNotifierProvider<BaseDashboardProvider>(
+            create: (_) => BaseDashboardProvider()),
         ChangeNotifierProvider<OnBoardingProvider>(
             create: (_) => OnBoardingProvider()),
         ChangeNotifierProvider<SchoolWorkspaceProvider>(

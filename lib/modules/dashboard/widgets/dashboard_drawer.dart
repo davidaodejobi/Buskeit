@@ -1,7 +1,8 @@
 import 'package:buskeit/constant/constant.dart';
-import 'package:buskeit/shared/app_border_button.dart';
+import 'package:buskeit/modules/dashboard/view_model/dahboard_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 import '../../../shared/shared.dart';
 
@@ -12,6 +13,8 @@ class DashboardDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final BaseDashboardProvider provider =
+        Provider.of<BaseDashboardProvider>(context);
     return Drawer(
       child: SafeArea(
         child: Column(
@@ -44,7 +47,10 @@ class DashboardDrawer extends StatelessWidget {
                   ).paddingHorizontal(padding: 16),
                 ),
                 ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pop(context);
+                    provider.setCurrentIndex(0);
+                  },
                   leading: const FaIcon(
                     FontAwesomeIcons.houseLaptop,
                   ),
@@ -56,6 +62,7 @@ class DashboardDrawer extends StatelessWidget {
                 ListTile(
                   onTap: () {
                     Navigator.pop(context);
+                    provider.setCurrentIndex(1);
                   },
                   leading: const FaIcon(
                     FontAwesomeIcons.servicestack,
@@ -68,6 +75,7 @@ class DashboardDrawer extends StatelessWidget {
                 ListTile(
                   onTap: () {
                     Navigator.pop(context);
+                    provider.setCurrentIndex(2);
                   },
                   leading: const FaIcon(
                     FontAwesomeIcons.tools,
@@ -80,6 +88,7 @@ class DashboardDrawer extends StatelessWidget {
                 ListTile(
                   onTap: () {
                     Navigator.pop(context);
+                    provider.setCurrentIndex(3);
                   },
                   leading: const FaIcon(
                     FontAwesomeIcons.houseLaptop,

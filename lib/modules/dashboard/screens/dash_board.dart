@@ -1,7 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:buskeit/modules/dashboard/screens/dashboard.dart';
+import 'package:buskeit/modules/dashboard/screens/services/services.dart';
 import 'package:buskeit/modules/dashboard/screens/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constant/constant.dart';
@@ -18,7 +21,30 @@ class BaseDashBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<DashboardProvider>(context);
+    final provider = Provider.of<BaseDashboardProvider>(context);
+    final List<Widget> screens = [
+      const Dashboard(),
+      const Services(),
+      const Settings(),
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Lottie.asset(
+            'assets/animations/helpdesk.json',
+          ),
+          Text(
+            'Help Desk',
+            style: Theme.of(context).textTheme.headline4,
+          ),
+          const YMargin(16),
+          Text(
+            'You can ask your questions here, but it is still under development',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.headline5,
+          ),
+        ],
+      ).paddingAll(),
+    ];
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -50,7 +76,7 @@ class BaseDashBoard extends StatelessWidget {
       drawer: const DashboardDrawer(),
       // body: const Dashboard(),
       // body: const Services(),
-      body: const Settings(),
+      body: screens[provider.currentIndex],
     );
   }
 }
