@@ -3,10 +3,12 @@ import 'dart:developer';
 import 'package:buskeit/core/core.dart';
 import 'package:buskeit/locator.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../constant/constant.dart';
 import '../../../../shared/shared.dart';
+import '../../../../shared/web_view.dart';
 import '../../view_model/bus_mgmt_controller.dart';
 import '../../widgets/bus_management/bus_overview_card.dart';
 
@@ -128,59 +130,87 @@ class _BusManagementState extends State<BusManagement> {
             ],
           ),
           //glassmorphism
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 500),
-            curve: Curves.easeInOut,
-            height: busMgmtProvider.location ? 200 : 0,
-            padding: const EdgeInsets.only(
-              top: 10,
-              right: 16,
-              left: 16,
-            ),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.white10.withAlpha(80)),
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColor.greyColor3.withAlpha(100),
-                  blurRadius: 10.0,
-                  spreadRadius: 0.0,
+
+          Stack(
+            alignment: Alignment.bottomRight,
+            children: [
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.easeInOut,
+                height: busMgmtProvider.location ? 200 : 0,
+                padding: const EdgeInsets.only(
+                  top: 10,
+                  right: 16,
+                  left: 16,
                 ),
-              ],
-              color: Colors.white.withOpacity(0.2),
-            ),
-            child: StreamBuilder(
-              stream: location.stream,
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return const Center(
-                    child: Text('Error'),
-                  );
-                } else {
-                  log('snapshot.data: ${snapshot.data}');
-                  return Text(
-                    'The driver is currently in ${snapshot.data}',
-                    style: Theme.of(context).textTheme.headline5!.copyWith(
-                          fontWeight: FontWeight.w500,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.white10.withAlpha(80)),
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColor.greyColor3.withAlpha(100),
+                      blurRadius: 10.0,
+                      spreadRadius: 0.0,
+                    ),
+                  ],
+                  color: Colors.white.withOpacity(0.2),
+                ),
+                child: StreamBuilder(
+                  stream: location.stream,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return const Center(
+                        child: Text('Error'),
+                      );
+                    } else {
+                      log('snapshot.data: ${snapshot.data}');
+                      return Text(
+                        'The driver is currently in ${snapshot.data}',
+                        style: Theme.of(context).textTheme.headline5!.copyWith(
+                              fontWeight: FontWeight.w500,
+                            ),
+                      ).paddingLTRB(top: 10);
+                    }
+                  },
+                ),
+                // ListView.builder(
+                //   itemCount: 10,
+                //   itemBuilder: (context, index) {
+                //     return Text(
+                //       'The driver is currently in $hashCode',
+                //       style: Theme.of(context).textTheme.headline5!.copyWith(
+                //             fontWeight: FontWeight.w500,
+                //           ),
+                //     ).paddingLTRB(top: 10);
+                //   },
+                // ),
+              ),
+              if (busMgmtProvider.location)
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const UIWebView(
+                          title: 'Locate Driver...',
+                          url:
+                              'https://www.findlatlong.com/?lat=8.5021543&long=4.5085633',
                         ),
-                  ).paddingLTRB(top: 10);
-                }
-              },
-            ),
-            // ListView.builder(
-            //   itemCount: 10,
-            //   itemBuilder: (context, index) {
-            //     return Text(
-            //       'The driver is currently in $hashCode',
-            //       style: Theme.of(context).textTheme.headline5!.copyWith(
-            //             fontWeight: FontWeight.w500,
-            //           ),
-            //     ).paddingLTRB(top: 10);
-            //   },
-            // ),
+                      ),
+                    );
+                  },
+                  child: const FaIcon(
+                    FontAwesomeIcons.mapPin,
+                    color: AppColor.secondaryColor,
+                  ).paddingLTRB(
+                    right: 16,
+                    bottom: 16,
+                  ),
+                )
+            ],
           ),
           Positioned(
             bottom: 10,
