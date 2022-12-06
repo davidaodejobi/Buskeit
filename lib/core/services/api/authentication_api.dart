@@ -32,7 +32,7 @@ class AuthenticationApiService with ChangeNotifier {
 
   storeToken(response) {
     ResponseModel res = responseModelFromJson(response);
-    String myToken = res.tokens!.access!;
+    String myToken = res.tokens!.access;
 
     if (myToken != '') {
       storageService.storeItem(key: token, value: myToken);

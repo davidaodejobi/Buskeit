@@ -56,17 +56,6 @@ class SignIn extends StatelessWidget {
                         provider.toggleSavePassword();
                       }),
                     ),
-                    // GestureDetector(
-                    //   onTap: () {
-                    //   },
-                    //   child: Text(
-                    //     'Forgot password?',
-                    //     style: Theme.of(context).textTheme.headline6!.copyWith(
-                    //           fontWeight: FontWeight.w500,
-                    //           color: AppColor.secondaryColor,
-                    //         ),
-                    //   ),
-                    // ),
                   ],
                 ),
                 const YMargin(50),

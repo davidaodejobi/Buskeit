@@ -1,7 +1,7 @@
 import 'package:buskeit/constant/constant.dart';
 import 'package:buskeit/shared/margin.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class DashBoardCard extends StatelessWidget {
   final String title;
@@ -41,10 +41,17 @@ class DashBoardCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const FaIcon(
-              FontAwesomeIcons.houseUser,
-              color: AppColor.secondaryColor,
-              size: 50,
+            Container(
+              height: 70,
+              width: 70,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: AppColor.primaryColor.withOpacity(0.2),
+                shape: BoxShape.circle,
+              ),
+              child: SvgPicture.asset(
+                'assets/svgs/add-home.svg',
+              ),
             ),
             const YMargin(10),
             Text(

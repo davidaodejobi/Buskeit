@@ -1,7 +1,7 @@
 import 'package:buskeit/constant/constant.dart';
 import 'package:buskeit/modules/dashboard/view_model/dahboard_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../shared/shared.dart';
@@ -51,8 +51,8 @@ class DashboardDrawer extends StatelessWidget {
                     Navigator.pop(context);
                     provider.setCurrentIndex(0);
                   },
-                  leading: const FaIcon(
-                    FontAwesomeIcons.houseLaptop,
+                  leading: SvgPicture.asset(
+                    'assets/svgs/dashboard.svg',
                   ),
                   title: Text(
                     'Dashboard',
@@ -64,8 +64,8 @@ class DashboardDrawer extends StatelessWidget {
                     Navigator.pop(context);
                     provider.setCurrentIndex(1);
                   },
-                  leading: const FaIcon(
-                    FontAwesomeIcons.servicestack,
+                  leading: SvgPicture.asset(
+                    'assets/svgs/services.svg',
                   ),
                   title: Text(
                     'Services',
@@ -77,8 +77,8 @@ class DashboardDrawer extends StatelessWidget {
                     Navigator.pop(context);
                     provider.setCurrentIndex(2);
                   },
-                  leading: const FaIcon(
-                    FontAwesomeIcons.tools,
+                  leading: SvgPicture.asset(
+                    'assets/svgs/settings.svg',
                   ),
                   title: Text(
                     'Settings',
@@ -90,8 +90,8 @@ class DashboardDrawer extends StatelessWidget {
                     Navigator.pop(context);
                     provider.setCurrentIndex(3);
                   },
-                  leading: const FaIcon(
-                    FontAwesomeIcons.houseLaptop,
+                  leading: SvgPicture.asset(
+                    'assets/svgs/help.svg',
                   ),
                   title: Text(
                     'Help',
@@ -101,7 +101,9 @@ class DashboardDrawer extends StatelessWidget {
               ],
             ),
             AppBorderButton(
-              onTap: () {},
+              onTap: () {
+                provider.logout(context);
+              },
               text: 'Logout',
               width: double.infinity,
             ).paddingAll(padding: 16),

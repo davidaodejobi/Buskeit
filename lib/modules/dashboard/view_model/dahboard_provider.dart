@@ -1,6 +1,20 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+import '../../../constant/constant.dart';
+import '../../../core/core.dart';
+import '../../../locator.dart';
+import '../../auth_flow/screens/sign_in.dart';
 
 class BaseDashboardProvider with ChangeNotifier {
+  StorageService storageService = getIt<StorageService>();
+
+  logout(BuildContext context) {
+    storageService.deleteItem(key: token);
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const SignIn()));
+    notifyListeners();
+  }
+
   int _currentIndex = 0;
   int get currentIndex => _currentIndex;
   bool _hasWorkSpace = false;

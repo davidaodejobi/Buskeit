@@ -13,3 +13,12 @@ void errorToast(BuildContext context, {required String message}) {
     ),
   );
 }
+
+void successToast(BuildContext context, {required String message}) {
+  return showTopSnackBar(
+    Overlay.of(context)!,
+    CustomSnackBar.success(
+      message: message,
+    ),
+  );
+}

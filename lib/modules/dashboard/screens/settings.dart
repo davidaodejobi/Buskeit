@@ -5,7 +5,7 @@ import 'package:buskeit/constant/constant.dart';
 import 'package:provider/provider.dart';
 
 import '../../../shared/shared.dart';
-import '../../auth_flow/view_model/settings_provider.dart';
+import '../view_model/settings_provider.dart';
 import '../widgets/settings_dropdown_button.dart';
 import '../widgets/settings_login_status.dart';
 import '../widgets/settings_password.dart';

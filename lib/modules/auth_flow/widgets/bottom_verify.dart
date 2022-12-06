@@ -51,7 +51,7 @@ class _BottomVerifyState extends State<BottomVerify> {
                     ),
               ),
               TextSpan(
-                text: 'widget.email',
+                text: provider.emailController.text,
                 style: Theme.of(context).textTheme.headline6!.copyWith(
                       color: AppColor.greyColor2,
                     ),

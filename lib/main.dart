@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:buskeit/modules/auth_flow/view_model/settings_provider.dart';
 import 'package:buskeit/modules/dashboard/screens/dash_board.dart';
 import 'package:buskeit/modules/dashboard/view_model/bus_mgmt_controller.dart';
 import 'package:buskeit/modules/dashboard/view_model/school_workspace_provider.dart';
@@ -19,6 +18,7 @@ import 'core/utils/token_decode.dart';
 import 'locator.dart';
 import 'modules/auth_flow/screens/sign_in.dart';
 import 'modules/auth_flow/view_model/signup_provider.dart';
+import 'modules/dashboard/view_model/settings_provider.dart';
 import 'modules/onboarding/onboarding.dart';
 
 StorageService storageService = getIt<StorageService>();
@@ -72,26 +72,16 @@ class MyApp extends StatelessWidget {
             create: (_) => SettingsProvider()),
         ChangeNotifierProvider<BusMgmtProvider>(
             create: (_) => BusMgmtProvider()),
-        // StreamProvider<String>(
-        //   create: (_) =>
-        //       Location(emitTime: 20, currentLocation: 'Ilorin').location,
-        //   initialData: 'Ilorin',
-        //   catchError: (_, error) => error.toString(),
-        //   // child: MyApp(),
-        // ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Buskeit',
         theme: AppTheme.light(),
-        // home: isExpired ? const SignIn() : const DashBoard(),
         home: !isOnboarded
             ? Onboarding()
             : isExpired
                 ? const SignIn()
                 : const BaseDashBoard(),
-        // home: const BaseDashBoard(),
-        // home: const BaseDashBoard(),
       ),
     );
   }

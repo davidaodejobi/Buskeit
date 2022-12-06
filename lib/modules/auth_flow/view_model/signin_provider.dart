@@ -64,7 +64,7 @@ class SigninProvider with ChangeNotifier {
   }) async {
     startLoading();
     try {
-      ResponseModel responseModel = ResponseModel();
+      // ResponseModel responseModel = ResponseModel();
       await connect().post(
         "/auth/token",
         data: {
@@ -79,6 +79,10 @@ class SigninProvider with ChangeNotifier {
             hiveStorageService.storeItem(
                 key: password, value: passwordController.text);
           }
+          emailController.clear();
+          passwordController.clear();
+
+          successToast(context, message: 'Login Successful');
 
           Navigator.pushReplacement(
             context,

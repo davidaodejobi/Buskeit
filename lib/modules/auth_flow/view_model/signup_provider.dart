@@ -130,6 +130,9 @@ class SignupProvider with ChangeNotifier {
         if (savePassword) {
           hiveStorageService.storeItem(
               key: password, value: passwordController.text);
+
+          successToast(context,
+              message: 'Account created successfully, please ver');
         }
       });
       stopLoading();
@@ -149,15 +152,17 @@ class SignupProvider with ChangeNotifier {
   }) async {
     startLoading();
     try {
-      ResponseModel responseModel = ResponseModel();
-      log('emailController.text: ${emailController.text}');
-      log('code: $code');
       await connect().post("/auth/register/verify", data: {
         "email": emailController.text,
         "code": code,
       }).then((value) {
-        log('valueeeeeeeeeeeeeeeeeeeeeeeeee: $value');
         storeToken(value);
+
+        emailController.clear();
+        passwordController.clear();
+        passwordCController.clear();
+
+        successToast(context, message: 'Verification successful');
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -200,6 +205,11 @@ class SignupProvider with ChangeNotifier {
         "phone_number": phoneNumberController.text,
         "gender": selectedGender,
       }).then((value) async {
+        firstNameController.clear();
+        lastNameController.clear();
+        phoneNumberController.clear();
+
+        successToast(context, message: 'Registration successful');
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
