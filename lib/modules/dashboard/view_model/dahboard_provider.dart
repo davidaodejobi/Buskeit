@@ -19,6 +19,13 @@ class BaseDashboardProvider with ChangeNotifier {
   int get currentIndex => _currentIndex;
   bool _hasWorkSpace = false;
   bool get hasWorkSpace => _hasWorkSpace;
+  bool _dashboard = true;
+  bool get dashboard => _dashboard;
+
+  toggleDashboard() {
+    _dashboard = !_dashboard;
+    notifyListeners();
+  }
 
   void setCurrentIndex(int index) {
     _currentIndex = index;

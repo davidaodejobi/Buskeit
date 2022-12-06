@@ -1,8 +1,14 @@
+import 'package:buskeit/core/services/services.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../../../constant/constant.dart';
+import '../../../locator.dart';
 import '../../../shared/shared.dart';
+import 'dash_board.dart';
+
+HiveStorageService hiveStorageService = getIt<HiveStorageService>();
 
 class IndividualVerification extends StatelessWidget {
   const IndividualVerification({super.key});
@@ -20,7 +26,7 @@ class IndividualVerification extends StatelessWidget {
           Text('Join workspace', style: Theme.of(context).textTheme.headline3),
           const YMargin(20),
           Text(
-            'Please enter the school verification code sent to your email by the school admin',
+            'Please enter the school verification sent to your email by the school admin',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headline5!.copyWith(
                   color: AppColor.greyColor,
@@ -73,7 +79,7 @@ class IndividualVerification extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Container(),
+                    builder: (context) => const IndividualSuccess(),
                   ),
                 );
               },
@@ -88,6 +94,51 @@ class IndividualVerification extends StatelessWidget {
           const YMargin(20),
         ],
       ).paddingSymmetric(horizontal: 16),
+    );
+  }
+}
+
+class IndividualSuccess extends StatelessWidget {
+  const IndividualSuccess({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Column(
+              children: [
+                Lottie.asset(
+                  'assets/animations/successful.json',
+                ),
+                Text(
+                  'You have successfully joined a school workspace',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline4,
+                ),
+              ],
+            ),
+            AppElevatedButton(
+              onTap: () {
+                hiveStorageService.storeItem(
+                    key: hasJoinedWorkspace, value: true);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const BaseDashBoard(),
+                  ),
+                );
+              },
+              text: 'Go to school Dashboard',
+              isLoading: false,
+            )
+          ],
+        ),
+      ),
     );
   }
 }

@@ -1,11 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:buskeit/modules/dashboard/screens/dashboard.dart';
-import 'package:buskeit/modules/dashboard/screens/services/services.dart';
-import 'package:buskeit/modules/dashboard/screens/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+
+import 'package:buskeit/main.dart';
+import 'package:buskeit/modules/dashboard/screens/dashboard.dart';
+import 'package:buskeit/modules/dashboard/screens/services/services.dart';
+import 'package:buskeit/modules/dashboard/screens/settings.dart';
 
 import '../../../constant/constant.dart';
 import '../../../core/core.dart';
@@ -13,17 +15,36 @@ import '../../../locator.dart';
 import '../../../shared/shared.dart';
 import '../view_model/dahboard_provider.dart';
 import '../widgets/dashboard_drawer.dart';
+import '../widgets/joined_dashboard.dart';
+import '../widgets/joined_dashboard_drawer.dart';
 
 StorageService storageService = getIt<StorageService>();
 
-class BaseDashBoard extends StatelessWidget {
+class BaseDashBoard extends StatefulWidget {
   const BaseDashBoard({Key? key}) : super(key: key);
+
+  @override
+  State<BaseDashBoard> createState() => _BaseDashBoardState();
+}
+
+class _BaseDashBoardState extends State<BaseDashBoard> {
+  bool hasJoined = false;
+
+  @override
+  void initState() {
+    hiveStorageService.readItem(key: hasJoinedWorkspace).then((value) {
+      setState(() {
+        value == null ? hasJoined = false : hasJoined = value as bool;
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<BaseDashboardProvider>(context);
     final List<Widget> screens = [
-      const Dashboard(),
+      hasJoined ? const JoinedDashBoard() : const Dashboard(),
       const Services(),
       const Settings(),
       Column(
@@ -44,6 +65,7 @@ class BaseDashBoard extends StatelessWidget {
           ),
         ],
       ).paddingAll(),
+      const Dashboard()
     ];
     return Scaffold(
       appBar: AppBar(
@@ -73,7 +95,8 @@ class BaseDashBoard extends StatelessWidget {
           ),
         ],
       ),
-      drawer: const DashboardDrawer(),
+      drawer:
+          hasJoined ? const JoinedDashboardDrawer() : const DashboardDrawer(),
       // body: const Dashboard(),
       // body: const Services(),
       body: screens[provider.currentIndex],

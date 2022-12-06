@@ -22,3 +22,12 @@ void successToast(BuildContext context, {required String message}) {
     ),
   );
 }
+
+void infoToast(BuildContext context, {required String message}) {
+  return showTopSnackBar(
+    Overlay.of(context)!,
+    CustomSnackBar.info(
+      message: message,
+    ),
+  );
+}

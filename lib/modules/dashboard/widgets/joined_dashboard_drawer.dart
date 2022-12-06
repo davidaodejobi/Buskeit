@@ -1,13 +1,13 @@
-import 'package:buskeit/constant/constant.dart';
-import 'package:buskeit/modules/dashboard/view_model/dahboard_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
+import '../../../constant/constant.dart';
 import '../../../shared/shared.dart';
+import '../view_model/dahboard_provider.dart';
 
-class DashboardDrawer extends StatelessWidget {
-  const DashboardDrawer({
+class JoinedDashboardDrawer extends StatelessWidget {
+  const JoinedDashboardDrawer({
     Key? key,
   }) : super(key: key);
 
@@ -48,9 +48,16 @@ class DashboardDrawer extends StatelessWidget {
                 ),
                 ListTile(
                   onTap: () {
-                    Navigator.pop(context);
-                    provider.setCurrentIndex(0);
+                    // Navigator.pop(context);
+                    // provider.setCurrentIndex(0);
+                    provider.toggleDashboard();
                   },
+                  trailing: Icon(
+                    provider.dashboard
+                        ? Icons.keyboard_arrow_up_outlined
+                        : Icons.keyboard_arrow_down_outlined,
+                    color: AppColor.greyColor,
+                  ),
                   leading: SvgPicture.asset(
                     'assets/svgs/dashboard.svg',
                   ),
@@ -59,20 +66,51 @@ class DashboardDrawer extends StatelessWidget {
                     style: Theme.of(context).textTheme.headline5,
                   ),
                 ),
+                if (provider.dashboard)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16),
+                    child: Column(
+                      children: [
+                        ListTile(
+                          onTap: () {
+                            Navigator.pop(context);
+                            provider.setCurrentIndex(0);
+                          },
+                          leading: SvgPicture.asset(
+                            'assets/svgs/dashboard.svg',
+                          ),
+                          title: Text(
+                            'St. Mary\'s College',
+                            style: Theme.of(context).textTheme.headline5,
+                          ),
+                        ),
+                        ListTile(
+                          onTap: () {
+                            Navigator.pop(context);
+                            provider.setCurrentIndex(4);
+                          },
+                          leading: SvgPicture.asset(
+                            'assets/svgs/dashboard.svg',
+                          ),
+                          title: Text(
+                            'Create/Join a Workspace',
+                            style: Theme.of(context).textTheme.headline5,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ListTile(
                   onTap: () {
-                    infoToast(context,
-                        message:
-                            'Please Join a Workspace to have access to this feature');
+                    Navigator.pop(context);
+                    provider.setCurrentIndex(1);
                   },
                   leading: SvgPicture.asset(
                     'assets/svgs/services.svg',
                   ),
                   title: Text(
                     'Services',
-                    style: Theme.of(context).textTheme.headline5!.copyWith(
-                          color: AppColor.greyColor,
-                        ),
+                    style: Theme.of(context).textTheme.headline5,
                   ),
                 ),
                 ListTile(
