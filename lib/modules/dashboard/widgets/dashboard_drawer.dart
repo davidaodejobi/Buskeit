@@ -67,11 +67,12 @@ class DashboardDrawer extends StatelessWidget {
                   },
                   leading: SvgPicture.asset(
                     'assets/svgs/services.svg',
+                    color: AppColor.greyColor2,
                   ),
                   title: Text(
                     'Services',
                     style: Theme.of(context).textTheme.headline5!.copyWith(
-                          color: AppColor.greyColor,
+                          color: AppColor.greyColor2,
                         ),
                   ),
                 ),

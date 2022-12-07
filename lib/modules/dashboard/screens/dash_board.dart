@@ -52,6 +52,7 @@ class _BaseDashBoardState extends State<BaseDashBoard> {
         children: [
           Lottie.asset(
             'assets/animations/helpdesk.json',
+            repeat: false,
           ),
           Text(
             'Help Desk',

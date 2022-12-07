@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:buskeit/modules/dashboard/screens/dash_board.dart';
 import 'package:buskeit/modules/dashboard/view_model/bus_mgmt_controller.dart';
+import 'package:buskeit/modules/dashboard/view_model/individual_veri_provider.dart';
 import 'package:buskeit/modules/dashboard/view_model/school_workspace_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -72,6 +73,8 @@ class MyApp extends StatelessWidget {
             create: (_) => SettingsProvider()),
         ChangeNotifierProvider<BusMgmtProvider>(
             create: (_) => BusMgmtProvider()),
+        ChangeNotifierProvider<IndividualVeriProvider>(
+            create: (_) => IndividualVeriProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

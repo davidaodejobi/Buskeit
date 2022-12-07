@@ -1,20 +1,40 @@
 import 'package:buskeit/core/services/services.dart';
+import 'package:buskeit/modules/dashboard/view_model/individual_veri_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:provider/provider.dart';
 
 import '../../../constant/constant.dart';
 import '../../../locator.dart';
 import '../../../shared/shared.dart';
-import 'dash_board.dart';
 
 HiveStorageService hiveStorageService = getIt<HiveStorageService>();
 
-class IndividualVerification extends StatelessWidget {
+class IndividualVerification extends StatefulWidget {
   const IndividualVerification({super.key});
 
   @override
+  State<IndividualVerification> createState() => _IndividualVerificationState();
+}
+
+class _IndividualVerificationState extends State<IndividualVerification> {
+  late TextEditingController pinController;
+
+  @override
+  void initState() {
+    super.initState();
+    pinController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    pinController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final value = Provider.of<IndividualVeriProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Individual Verification'),
@@ -26,7 +46,7 @@ class IndividualVerification extends StatelessWidget {
           Text('Join workspace', style: Theme.of(context).textTheme.headline3),
           const YMargin(20),
           Text(
-            'Please enter the school verification sent to your email by the school admin',
+            'Please enter the school code sent to your email by the school admin',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headline5!.copyWith(
                   color: AppColor.greyColor,
@@ -39,7 +59,7 @@ class IndividualVerification extends StatelessWidget {
             ),
             child: PinCodeTextField(
               length: 6,
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.text,
               obscureText: false,
               animationType: AnimationType.fade,
               pinTheme: PinTheme(
@@ -59,8 +79,13 @@ class IndividualVerification extends StatelessWidget {
               hapticFeedbackTypes: HapticFeedbackTypes.vibrate,
               useHapticFeedback: true,
               enablePinAutofill: true,
-              controller: TextEditingController(),
-              onCompleted: (v) {},
+              controller: pinController,
+              onCompleted: (v) {
+                value.join(
+                  context: context,
+                  workspaceId: pinController.text,
+                );
+              },
               onChanged: (value) {},
               beforeTextPaste: (text) {
                 //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
@@ -71,74 +96,16 @@ class IndividualVerification extends StatelessWidget {
             ),
           ),
           const YMargin(50),
-          SizedBox(
-            width: double.infinity,
-            height: 50,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const IndividualSuccess(),
-                  ),
-                );
-              },
-              child: Text(
-                'Verify',
-                style: Theme.of(context).textTheme.headline5!.copyWith(
-                      color: Colors.white,
-                    ),
-              ),
-            ),
+          AppElevatedButton(
+            onTap: () {
+              value.join(context: context, workspaceId: pinController.text);
+            },
+            isLoading: value.isLoading,
+            text: 'Verify',
           ),
           const YMargin(20),
         ],
       ).paddingSymmetric(horizontal: 16),
-    );
-  }
-}
-
-class IndividualSuccess extends StatelessWidget {
-  const IndividualSuccess({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Column(
-              children: [
-                Lottie.asset(
-                  'assets/animations/successful.json',
-                ),
-                Text(
-                  'You have successfully joined a school workspace',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline4,
-                ),
-              ],
-            ),
-            AppElevatedButton(
-              onTap: () {
-                hiveStorageService.storeItem(
-                    key: hasJoinedWorkspace, value: true);
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const BaseDashBoard(),
-                  ),
-                );
-              },
-              text: 'Go to school Dashboard',
-              isLoading: false,
-            )
-          ],
-        ),
-      ),
     );
   }
 }
