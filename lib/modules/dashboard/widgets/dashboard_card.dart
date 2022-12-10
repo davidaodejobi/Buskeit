@@ -1,17 +1,21 @@
-import 'package:buskeit/constant/constant.dart';
-import 'package:buskeit/shared/margin.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import 'package:buskeit/constant/constant.dart';
+import 'package:buskeit/shared/margin.dart';
 
 class DashBoardCard extends StatelessWidget {
   final String title;
   final String subtitle;
   final VoidCallback onTap;
+  final Color color;
   const DashBoardCard({
     Key? key,
     required this.title,
     required this.subtitle,
     required this.onTap,
+    this.color = Colors.white,
   }) : super(key: key);
 
   @override
@@ -27,7 +31,7 @@ class DashBoardCard extends StatelessWidget {
           vertical: 16,
         ),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: color,
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(

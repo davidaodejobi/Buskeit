@@ -27,6 +27,7 @@ void infoToast(BuildContext context, {required String message}) {
   return showTopSnackBar(
     Overlay.of(context)!,
     CustomSnackBar.info(
+      backgroundColor: AppColor.tertiaryColor,
       message: message,
     ),
   );

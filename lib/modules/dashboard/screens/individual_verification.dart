@@ -1,4 +1,5 @@
 import 'package:buskeit/core/services/services.dart';
+import 'package:buskeit/modules/dashboard/screens/individual_success.dart';
 import 'package:buskeit/modules/dashboard/view_model/individual_veri_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -98,7 +99,13 @@ class _IndividualVerificationState extends State<IndividualVerification> {
           const YMargin(50),
           AppElevatedButton(
             onTap: () {
-              value.join(context: context, workspaceId: pinController.text);
+              // value.join(context: context, workspaceId: pinController.text);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const IndividualSuccess(),
+                ),
+              );
             },
             isLoading: value.isLoading,
             text: 'Verify',

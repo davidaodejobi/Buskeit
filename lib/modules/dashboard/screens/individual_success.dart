@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../shared/shared.dart';
+import 'dash_board.dart';
 
 class IndividualSuccess extends StatelessWidget {
   const IndividualSuccess({super.key});
@@ -28,7 +29,14 @@ class IndividualSuccess extends StatelessWidget {
               ],
             ),
             AppElevatedButton(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const BaseDashBoard(),
+                  ),
+                );
+              },
               text: 'Go to school Dashboard',
               isLoading: false,
             )

@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 
 import '../../../locator.dart';
 import '../../../shared/shared.dart';
-import '../screens/dash_board.dart';
+import '../screens/individual_success.dart';
 
 class IndividualVeriProvider with ChangeNotifier {
   bool isLoading = false;
@@ -47,7 +47,7 @@ class IndividualVeriProvider with ChangeNotifier {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const BaseDashBoard(),
+                builder: (context) => const IndividualSuccess(),
               ),
             );
           }
